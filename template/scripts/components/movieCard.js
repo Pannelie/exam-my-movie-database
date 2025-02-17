@@ -1,3 +1,8 @@
+//skapande av varje film-kort, stor och liten variant?
+// innerhtml frånm variabel
+
+// knapp för att lägga till favorit med add-eventlistener.
+
 // Funktioner för att visa innehåll
 export function showAllCards(container) {
   // Här kan du lägga till alla kort som finns på index-sidan
@@ -25,3 +30,12 @@ export function showSearchResults(container) {
   // Visa sökresultat, kanske genom att hämta data från en sökning
   container.innerHTML = "<div>Sökresultat här...</div>";
 }
+
+//Hämtat section för mina trailers
+const trailersContainerRef = document.querySelector(`.trailer`);
+
+//section för rekommenderade filmer, återanvänds på index, favorites och search
+const cardContainerRef = document.querySelector(`#cardContainer`);
+
+//detaljer för enskild film
+const movieInformationRef = document.querySelector(`#movieInformation`);
