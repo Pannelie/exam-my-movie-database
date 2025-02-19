@@ -5,6 +5,28 @@ import { getFavorites } from "/template/scripts/utils/storage.js";
 
 // knapp för att lägga till favorit med add-eventlistener.
 
+import { addMovieClickListeners } from "../utils/events.js";
+
+export function renderMovies(movies, container) {
+  if (!container) {
+    console.error("Container hittades inte!");
+    return;
+  }
+
+  container.innerHTML = movies
+    .map(
+      (movie) =>
+        `<article class="movieCard__article" data-id="${movie.imdbID}">
+          <img src="${movie.Poster}" alt="${movie.Title}" class="movieCard__img">
+          <p class="movieCard__title">${movie.Title}</p>
+        </article>`
+    )
+    .join("");
+
+  // Lägg till event listeners efter renderingen
+  addMovieClickListeners();
+}
+
 //
 //
 //
