@@ -7,8 +7,8 @@ export const cardContainerRef = document.querySelector(`#cardContainer`);
 //detaljer för enskild film
 export const movieInformationRef = document.querySelector(`#movieInformation`);
 
-export function createArticle() {
-  document.createElement("article");
+export function createElement(tag) {
+  document.createElement("tag");
 }
 
 export function appChild(container, item) {
