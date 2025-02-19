@@ -16,7 +16,7 @@ export async function fetchTrailers() {
     // Slumpa 5 trailers
     const shuffled = data.sort(() => 0.5 - Math.random()); // Blandar listan
     const selectedTrailers = shuffled.slice(0, 5); // Tar de första 5 filmerna
-
+    console.log(selectedTrailers);
     // Rendera trailers
     selectedTrailers.forEach((movie, index) => {
       renderTrailers(movie, index + 1);
@@ -49,6 +49,3 @@ export async function fetchMovies() {
     console.error("Fel vid hämtning av filmer:", error);
   }
 }
-
-// Anropa funktionen när sidan laddas
-document.addEventListener("DOMContentLoaded", fetchTrailers);
