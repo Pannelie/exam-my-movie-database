@@ -102,17 +102,22 @@ body {
 .movieCard__article {
   overflow: hidden; /* Förhindrar att den inzoomade bilden bryter utanför */
   height: 550px;
+  cursor: pointer;
+  border-radius: 0.6rem;
 }
 
 .movieCard__img {
   height: 500px;
+  width: auto;
   object-fit: cover;
-  transition: transform 0.3s ease-in-out; /* Lägger till mjuk animation */
+  border-radius: 0.6rem;
+  transition: all 0.3s ease-in-out;
 }
 
 /* Zooma in BARA bilden vid hover */
 .movieCard__article:hover .movieCard__img {
-  transform: scale(1.15); /* Ökar bildstorleken*/
+  height: 550px; /* Max höjd vid hover */
+  /* max-width: 550px; Max bredd vid hover */
 }
 
 .movieCard__title {
