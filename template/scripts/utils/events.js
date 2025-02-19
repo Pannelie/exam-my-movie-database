@@ -38,7 +38,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       // Skapa HTML-innehåll för filmen
       const singleMovie = `
           <h2>${movieData.Title}</h2>
-          <img src="${movieData.Poster}" alt="${movieData.Title} poster" />
+          <img src="${movieData.Poster}" alt="${
+        movieData.Title
+      } poster" class="movieCard__img movieCard__img--grid" />
           <p>${movieData.description || `Hittade ingen beskrivning`}</p>
         `;
 

@@ -114,6 +114,11 @@ body {
   transition: all 0.3s ease-in-out;
 }
 
+.movieCard__img--grid {
+  grid-column: 1 / 2;
+  grid-row: 1 / 4;
+}
+
 /* Zooma in BARA bilden vid hover */
 .movieCard__article:hover .movieCard__img {
   height: 550px; /* Max höjd vid hover */
@@ -125,6 +130,12 @@ body {
   font-size: 1.2rem;
   font-family: var(--main-font-family);
   margin: 0.3rem 0 0.5rem;
+}
+
+.movie-information {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
 }
 
 @media screen {
