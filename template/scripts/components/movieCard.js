@@ -17,9 +17,9 @@ export function showFavorites(container) {
   container.innerHTML = ""; // Rensa befintligt innehåll
 
   favorites.forEach((favorite) => {
-    const card = document.createElement("div");
+    const card = createArticle();
     card.textContent = favorite.title; // Visa titel eller annan information
-    container.appendChild(card);
+    appChild(container, card);
   });
 }
 

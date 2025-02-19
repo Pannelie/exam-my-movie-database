@@ -6,3 +6,11 @@ const cardContainerRef = document.querySelector(`#cardContainer`);
 
 //detaljer för enskild film
 const movieInformationRef = document.querySelector(`#movieInformation`);
+
+function createArticle() {
+  document.createElement("article");
+}
+
+function appChild(container, item) {
+  container.appendChild(item);
+}
