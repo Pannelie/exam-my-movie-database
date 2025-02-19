@@ -1,14 +1,22 @@
+import { fetchTrailers, fetchMovies } from "./modules/api.js";
 
-if(window.location.pathname === '/' || window.location.pathname === '/index.html') {
-    console.log('index.html');
-
-} else if(window.location.pathname === '/favorites.html') {
-    console.log('favorites.html');
-
-} else if(window.location.pathname === '/movie.html') {
-    console.log('movie.html');
-
-} else if(window.location.pathname === '/search.html') {
-    console.log('search.html');
-
-}
+document.addEventListener("DOMContentLoaded", function () {
+  if (
+    window.location.pathname === "/" ||
+    window.location.pathname === "/template/index.html"
+  ) {
+    console.log("index.html");
+    // Kör funktioner för startsidan, t.ex. hämta trailers och filmer
+    fetchTrailers();
+    fetchMovies();
+  } else if (window.location.pathname === "/template/favorites.html") {
+    console.log("favorites.html");
+    // Kör funktioner för favoritsidan om du har några
+  } else if (window.location.pathname === "/template/movie.html") {
+    console.log("movie.html");
+    // Kör funktioner för enskild filmvisning
+  } else if (window.location.pathname === "/template/search.html") {
+    console.log("search.html");
+    // Kör funktioner för söksidan
+  }
+});
