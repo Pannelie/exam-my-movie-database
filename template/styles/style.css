@@ -1,84 +1,126 @@
-@import url('./carousel.css');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("./carousel.css");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 /* Variables */
 :root {
-    --header-grey: #121212;
-    /* Primary BG bör vara din bakgrundsfärg */
-    --primary-bg: #000000;
-    --primary-white: #ffffff;
-    --primary-grey: #1A1A1A;
-    --text-yellow: #F5C518;
+  --header-grey: #121212;
+  /* Primary BG bör vara din bakgrundsfärg */
+  --primary-bg: #000000;
+  --primary-white: #ffffff;
+  --primary-grey: #1a1a1a;
+  --text-yellow: #f5c518;
+
+  --main-font-family: "Montserrat", sans-serif;
 }
 
 /* Base */
 * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 body {
-    background-color: var(--primary-bg);
-    max-width: 100%;
+  background-color: var(--primary-bg);
+  max-width: 100%;
 }
 
 /* Utils */
 .content-wrapper {
-    max-width: 1180px;
-    margin: 0 auto;
+  max-width: 1180px;
+  margin: 0 auto;
 }
 .center {
-    margin: 0 auto;
+  margin: 0 auto;
 }
 
 .d-none {
-    display: none;
+  display: none;
 }
 
 .header {
-    background-color: var(--header-grey);
-    width: 100%;
-    padding: 1.5rem;
-    z-index: 999;
+  background-color: var(--header-grey);
+  width: 100%;
+  padding: 1.5rem;
+  z-index: 999;
 }
 
 .header__flex {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .header__logo {
-    width: 150px;
-    background-color: yellow;
+  width: 150px;
+  background-color: yellow;
 }
 
 .header__form {
-    width: 100%;
-    display: flex;
-    justify-content: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .header__input {
-    width: 50%;
-    padding: 1rem;
-    border-radius: 2rem 0 0 2rem;
-    border: none;
+  width: 50%;
+  padding: 1rem;
+  border-radius: 2rem 0 0 2rem;
+  border: none;
 }
 
 .header__form-btn {
-    border-radius: 0 2rem 2rem 0;
-    width: 5rem;
-    border: none;
-    cursor: pointer;
+  border-radius: 0 2rem 2rem 0;
+  width: 5rem;
+  border: none;
+  cursor: pointer;
 }
 
 .header__fav-btn {
-    text-decoration: none;
-    font-size: 1.5rem;
-    color: var(--text-yellow);
-    background: none;
-    border: none;
-    cursor: pointer;
+  text-decoration: none;
+  font-size: 1.5rem;
+  color: var(--text-yellow);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/*------ moviecards style --------*/
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-rows: 550px;
+  gap: 1rem;
+  justify-items: center;
+}
+
+.movieCard__link {
+  text-decoration: none;
+}
+
+.movieCard__article {
+  overflow: hidden; /* Förhindrar att den inzoomade bilden bryter utanför */
+  height: 550px;
+}
+
+.movieCard__img {
+  height: 500px;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out; /* Lägger till mjuk animation */
+}
+
+/* Zooma in BARA bilden vid hover */
+.movieCard__article:hover .movieCard__img {
+  transform: scale(1.15); /* Ökar bildstorleken*/
+}
+
+.movieCard__title {
+  color: white;
+  font-size: 1.2rem;
+  font-family: var(--main-font-family);
+  margin: 0.3rem 0 0.5rem;
+}
+
+@media screen {
 }
