@@ -50,3 +50,4 @@ export async function fetchMovies() {
 
 // Anropa funktionen när sidan laddas
 document.addEventListener("DOMContentLoaded", fetchTrailers);
+
