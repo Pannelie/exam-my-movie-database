@@ -39,13 +39,15 @@ export async function fetchMovies() {
     cardContainerRef.innerHTML = recommendedMovies
       .map(
         (movie) =>
-          `<article class="movie">
-              <img src="${movie.Poster}" alt="${movie.Title}" class="card-container__img">
-              <p class="card-container__title">${movie.Title}</p>
-          </article>`
+          `<a href=/template/movie.html/${movie.imdbID} class="movieCard__link"><article class="movieCard__article">
+              <img src="${movie.Poster}" alt="${movie.Title}" class="movieCard__img">
+              <p class="movieCard__title">${movie.Title}</p>
+          </article></a>`
       )
       .join("");
   } catch (error) {
     console.error("Fel vid hämtning av filmer:", error);
   }
 }
+
+//SÖKAPI lägg till * efteråt, wildcardasterisk, för att få med även felstavningar. t.ex. btman istället för batman.

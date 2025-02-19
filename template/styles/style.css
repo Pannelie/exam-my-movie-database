@@ -95,11 +95,28 @@ body {
   justify-items: center;
 }
 
-.card-container__img {
+.movieCard__link {
+  text-decoration: none;
+}
+.movieCard__link:hover {
+  color: green;
+  font-size: 2rem;
+}
+
+.movieCard__article {
+  transition: transform 0.3s ease-in-out;
+}
+
+.movie:hover {
+  transform: scale(1.05); /* Ökar storleken med 5% */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Lägger till en skugga */
+}
+
+.movieCard__img {
   height: 500px;
   object-fit: cover;
 }
-.card-container__title {
+.movieCard__title {
   color: white;
   font-size: 1.2rem;
   font-family: var(--main-font-family);
