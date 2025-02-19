@@ -1,7 +1,7 @@
 //skapande av varje film-kort, stor och liten variant?
 // innerhtml frånm variabel
 
-import { getFavorites } from "../utils/storage";
+import { getFavorites } from "/template/scripts/utils/storage.js";
 
 // knapp för att lägga till favorit med add-eventlistener.
 

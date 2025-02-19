@@ -1,10 +1,13 @@
 import { fetchTrailers, fetchMovies } from "./modules/api.js";
 
 import {
+  showAllCards,
   showFavorites,
   showMovieDetails,
   showSearchResults,
-} from "./components/movieCard";
+} from "./components/movieCard.js";
+
+import { cardContainerRef } from "./utils/domUtils.js";
 
 document.addEventListener("DOMContentLoaded", function () {
   if (

@@ -1,4 +1,5 @@
 import { renderTrailers } from "./caroussel.js";
+import { cardContainerRef } from "../utils/domUtils.js";
 
 export async function fetchTrailers() {
   try {
@@ -31,16 +32,17 @@ export async function fetchMovies() {
       "https://santosnr6.github.io/Data/favoritemovies.json"
     );
     let recommendedMovies = await response.json();
+    console.log(recommendedMovies);
 
     // let recommendedMovies = data.results.slice(0, 38);
 
-    moviesContainer.innerHTML = recommendedMovies
+    cardContainerRef.innerHTML = recommendedMovies
       .map(
         (movie) =>
-          `<div class="movie">
-              <img src="${movie.poster_path}" alt="${movie.title}">
+          `<article class="movie">
+              <img src="${movie.poster}" alt="${movie.title}">
               <p>${movie.title}</p>
-          </div>`
+          </article>`
       )
       .join("");
   } catch (error) {
@@ -50,4 +52,3 @@ export async function fetchMovies() {
 
 // Anropa funktionen när sidan laddas
 document.addEventListener("DOMContentLoaded", fetchTrailers);
-
