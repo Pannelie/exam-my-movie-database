@@ -40,8 +40,8 @@ export async function fetchMovies() {
       .map(
         (movie) =>
           `<article class="movie">
-              <img src="${movie.poster}" alt="${movie.title}">
-              <p>${movie.title}</p>
+              <img src="${movie.Poster}" alt="${movie.Title}" class="card-container__img">
+              <p class="card-container__title">${movie.Title}</p>
           </article>`
       )
       .join("");

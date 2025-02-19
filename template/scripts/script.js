@@ -1,11 +1,11 @@
 import { fetchTrailers, fetchMovies } from "./modules/api.js";
 
-import {
-  showAllCards,
-  showFavorites,
-  showMovieDetails,
-  showSearchResults,
-} from "./components/movieCard.js";
+// import {
+//   showAllCards,
+//   showFavorites,
+//   showMovieDetails,
+//   showSearchResults,
+// } from "./components/movieCard.js";
 
 import { cardContainerRef } from "./utils/domUtils.js";
 
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Kör funktioner för startsidan, t.ex. hämta trailers och filmer
     fetchTrailers();
     fetchMovies();
-    showAllCards(cardContainerRef);
+    // showAllCards(cardContainerRef);
   } else if (window.location.pathname === "/template/favorites.html") {
     console.log("favorites.html");
     showFavorites(cardContainerRef);
