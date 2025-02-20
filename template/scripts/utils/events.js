@@ -36,15 +36,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (movieData && movieData.Response !== "False") {
       // Skapa HTML-innehåll för filmen
       const singleMovie = `
-            <h2 class="movieCard__title movieCard__title--big">${
-              movieData.Title
-            }</h2>
-            <img src="${movieData.Poster}" alt="${
-        movieData.Title
-      } poster" class="movieCard__img movieCard__img--grid" />
-            <p class="movieCard__text">${
-              movieData.Plot || `Hittade ingen beskrivning`
-            }</p>
+        <img src="${movieData.Poster}" alt="${movieData.Title} poster" 
+            class="movieCard__img movieCard__img--grid" />
+        <h2 class="movieCard__title movieCard__title--big">${
+          movieData.Title
+        }</h2>
+        <section class="movieCard__flex-container">
+        <p class="movieCard__text movieCard__text--short">${movieData.Genre}</p>
+        <p class="movieCard__text movieCard__text--short">${movieData.Year}</p>
+        <p class="movieCard__text movieCard__text--short">${
+          movieData.Runtime
+        }</p></section>
+        <p class="movieCard__text movieCard__text--plot">${
+          movieData.Plot || `Hittade ingen beskrivning`
+        }</p>
           `;
 
       // Sätt innehållet i #movieInformation

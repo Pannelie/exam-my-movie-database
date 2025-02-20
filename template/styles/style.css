@@ -116,7 +116,7 @@ body {
 
 .movieCard__img--grid {
   grid-column: 1 / 2;
-  grid-row: 1 / 4;
+  grid-row: span 9;
 }
 
 /* Zooma in BARA bilden vid hover */
@@ -136,7 +136,7 @@ body {
 }
 
 .movieCard__title--big {
-  grid-column: 2 / 5;
+  grid-column: span 3;
   font-size: 2rem;
   margin: 1rem 1rem 0.5rem;
 }
@@ -144,19 +144,63 @@ body {
 .movieCard__text {
   color: white;
   text-align: justify;
-  letter-spacing: 0.4;
   font-family: var(--main-font-family);
   line-height: 1.5;
-  margin: 1rem 1.2rem 0.5rem;
-  grid-column: 2 / 5;
+}
+
+.movieCard__text--plot {
+  margin: 0rem 1.2rem 0.5rem;
+  grid-column: span 3;
+  grid-row: span 4;
+}
+
+.movieCard__text--short {
+  color: var(--text-yellow);
+}
+
+.movieCard__flex-container {
+  margin-left: 1.2rem;
+  grid-column: span 3;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 1rem;
 }
 
 .movie-information {
   margin-top: 2rem;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: auto;
+  grid-template-rows: repeat(6, 60px);
+  grid-row: auto;
 }
 
-@media screen {
+@media screen and (max-width: 810px) {
+  .movieCard__title--big {
+    font-size: 1.5rem;
+    margin: 1rem 1rem 0.5rem;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .movie-information {
+    justify-items: center;
+  }
+  .movieCard__img--grid {
+    grid-column: span 4;
+  }
+  .movieCard__title--big {
+    grid-column: span 4;
+  }
+  .movieCard__flex-container {
+    margin: 0 0 1rem;
+    grid-column: span 4;
+  }
+  .movieCard__text--short {
+    font-size: 0.8rem;
+  }
+  .movieCard__text--plot {
+    grid-column: span 4;
+    margin: 0 2rem;
+  }
 }
