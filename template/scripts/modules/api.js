@@ -41,7 +41,7 @@ export async function fetchMovies() {
   }
 }
 
-//sökfunktion fetch, behöver justerar söksträng
+//sökfunktion fetch, justerade söksträng till parameter vid anrop
 export async function fetchSearchOmdb(searchString) {
   try {
     const response = await fetch(
@@ -54,7 +54,7 @@ export async function fetchSearchOmdb(searchString) {
   }
 }
 
-//sökfunktion fetch, behöver justera imdb-ID
+//sökfunktion fetch, justerade imdbID till parameter vid anrop
 export async function fetchFullOmdb(imdbID) {
   try {
     const response = await fetch(

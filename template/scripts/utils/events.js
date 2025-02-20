@@ -1,5 +1,5 @@
 import { movieInformationRef, createElement, appChild } from "./domUtils.js";
-import { fetchMovies } from "../modules/api.js";
+import { fetchMovies, fetchFullOmdb } from "../modules/api.js";
 
 export function addMovieClickListeners() {
   const movieArticles = document.querySelectorAll(".movieCard__article");
@@ -30,23 +30,22 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    // Hämta alla filmer från fetchMovies
-    const allMovies = await fetchMovies();
-    const movieData = allMovies.find((movie) => movie.imdbID === movieId);
+    // Hämta detaljerad information om filmen
+    const movieData = await fetchFullOmdb(movieId);
 
-    if (movieData) {
+    if (movieData && movieData.Response !== "False") {
       // Skapa HTML-innehåll för filmen
       const singleMovie = `
-          <h2 class="movieCard__title movieCard__title--big">${
-            movieData.Title
-          }</h2>
-          <img src="${movieData.Poster}" alt="${
+            <h2 class="movieCard__title movieCard__title--big">${
+              movieData.Title
+            }</h2>
+            <img src="${movieData.Poster}" alt="${
         movieData.Title
       } poster" class="movieCard__img movieCard__img--grid" />
-          <p class="movieCard__text">${
-            movieData.description || `Hittade ingen beskrivning`
-          }</p>
-        `;
+            <p class="movieCard__text">${
+              movieData.Plot || `Hittade ingen beskrivning`
+            }</p>
+          `;
 
       // Sätt innehållet i #movieInformation
       movieInformationRef.innerHTML = singleMovie;
@@ -57,6 +56,47 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Fel vid hämtning av filminformation:", error);
   }
 });
+
+// document.addEventListener("DOMContentLoaded", async () => {
+//   // Hämta movieId från URL-parametern
+//   const urlParams = new URLSearchParams(window.location.search);
+//   const movieId = urlParams.get("id");
+
+//   if (!movieId) {
+//     console.error("Ingen movieId hittades i URL-parametrarna.");
+//     return;
+//   }
+
+//   try {
+//     // Hämta alla filmer från fetchMovies
+
+//     // const allMovies = await fetchFullOmdb(movieId);
+//     const allMovies = await fetchMovies();
+//     const movieData = allMovies.find((movie) => movie.imdbID === movieId);
+
+//     if (movieData) {
+//       // Skapa HTML-innehåll för filmen
+//       const singleMovie = `
+//           <h2 class="movieCard__title movieCard__title--big">${
+//             movieData.Title
+//           }</h2>
+//           <img src="${movieData.Poster}" alt="${
+//         movieData.Title
+//       } poster" class="movieCard__img movieCard__img--grid" />
+//           <p class="movieCard__text">${
+//             movieData.description || `Hittade ingen beskrivning`
+//           }</p>
+//         `;
+
+//       // Sätt innehållet i #movieInformation
+//       movieInformationRef.innerHTML = singleMovie;
+//     } else {
+//       console.error("Ingen film hittades med det ID:t.");
+//     }
+//   } catch (error) {
+//     console.error("Fel vid hämtning av filminformation:", error);
+//   }
+// });
 
 // export function addMovieClickListeners() {
 //   const movieArticles = document.querySelectorAll(".movieCard__article");
