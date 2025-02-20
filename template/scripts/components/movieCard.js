@@ -18,7 +18,7 @@ export function renderMovies(movies, container) {
       (movie) =>
         `<article class="movieCard__article" data-id="${movie.imdbID}">
           <img src="${movie.Poster}" alt="${movie.Title}" class="movieCard__img">
-          <p class="movieCard__title">${movie.Title}</p>
+          <p class="movieCard__title movieCard__title--small">${movie.Title}</p>
         </article>`
     )
     .join("");
