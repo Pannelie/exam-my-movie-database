@@ -1,3 +1,5 @@
+let apiKey = `1737b0b7`;
+
 import { renderTrailers } from "./caroussel.js";
 import { cardContainerRef } from "../utils/domUtils.js";
 import { addMovieClickListeners } from "../utils/events.js";
@@ -35,6 +37,16 @@ export async function fetchMovies() {
     return await response.json();
   } catch (error) {
     console.error("Fel vid hämtning av filmer:", error);
+    return [];
+  }
+}
+
+export async function fetchOmdb() {
+  try {
+    const response = await fetch(`http://www.omdbapi.com/?apikey=${apiKey}&s=[söksträng]`);
+    return await response.json();
+  } catch(error) {
+    console.error(`Fel vid hämtning av filmer:` error);
     return [];
   }
 }
