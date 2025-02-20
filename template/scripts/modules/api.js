@@ -41,12 +41,28 @@ export async function fetchMovies() {
   }
 }
 
-export async function fetchOmdb() {
+//sökfunktion fetch, behöver justerar söksträng
+export async function fetchSearchOmdb(searchString) {
   try {
-    const response = await fetch(`http://www.omdbapi.com/?apikey=${apiKey}&s=[söksträng]`);
+    const response = await fetch(
+      `http://www.omdbapi.com/?apikey=${apiKey}&s=${searchString}`
+    );
     return await response.json();
-  } catch(error) {
-    console.error(`Fel vid hämtning av filmer:` error);
+  } catch (error) {
+    console.error(`Fel vid hämtning av filmer:`, error);
+    return [];
+  }
+}
+
+//sökfunktion fetch, behöver justera imdb-ID
+export async function fetchFullOmdb(imdbID) {
+  try {
+    const response = await fetch(
+      `http://www.omdbapi.com/?apikey=${apiKey}&plot=full&i=${imdbID}`
+    );
+    return await response.json();
+  } catch (error) {
+    console.error(`Fel vid hämtning av filmer:`, error);
     return [];
   }
 }
