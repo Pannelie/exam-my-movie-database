@@ -38,6 +38,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const singleMovie = `
         <img src="${movieData.Poster}" alt="${movieData.Title} poster" 
             class="movieCard__img movieCard__img--grid" />
+            <section class="movieCard__text-content">
         <h2 class="movieCard__title movieCard__title--big">${
           movieData.Title
         }</h2>
@@ -50,6 +51,19 @@ document.addEventListener("DOMContentLoaded", async () => {
         <p class="movieCard__text movieCard__text--plot">${
           movieData.Plot || `Hittade ingen beskrivning`
         }</p>
+        ${
+          movieData.Director && movieData.Director !== "N/A"
+            ? `<p class="movieCard__text movieCard__text--long"><strong>Director:</strong> ${movieData.Director}</p>`
+            : ""
+        }
+        <p class="movieCard__text movieCard__text--long"><strong>Actors:</strong> ${
+          movieData.Actors
+        }</p>
+        ${
+          movieData.Awards && movieData.Awards !== "N/A"
+            ? `<p class="movieCard__text movieCard__text--long">${movieData.Awards}</p>`
+            : ""
+        }</section>
           `;
 
       // Sätt innehållet i #movieInformation
