@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         <section class="movieCard__img-container">
         <img src="${movieData.Poster}" alt="${movieData.Title} poster" 
             class="movieCard__img movieCard__img--grid" />
-            <i class="fa-solid fa-heart heart-symbol"></i>
+            <i class="fa-regular fa-heart heart-symbol"></i>
         </section>
         <section class="movieCard__text-content">
             <h2 class="movieCard__title movieCard__title--big">${
