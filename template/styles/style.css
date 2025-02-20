@@ -106,6 +106,17 @@ body {
   border-radius: 0.6rem;
 }
 
+.movie-information {
+  padding-left: 2rem;
+  margin-top: 2rem;
+  display: grid;
+  /* grid-template-columns: repeat(4, 1fr); */
+  grid-template-columns: auto 1fr;
+  grid-auto-flow: row dense;
+  /* grid-template-rows: repeat(6, 60px);
+  grid-row: auto; */
+}
+
 .movieCard__img {
   height: 500px;
   width: auto;
@@ -113,15 +124,32 @@ body {
   border-radius: 0.6rem;
   transition: all 0.3s ease-in-out;
 }
-
-.movieCard__img--grid {
-  width: 100%;
-}
-
 /* Zooma in BARA bilden vid hover */
 .movieCard__article:hover .movieCard__img {
   height: 550px; /* Max höjd vid hover */
   /* max-width: 550px; Max bredd vid hover */
+}
+
+.movieCard__img-container {
+  position: relative;
+  display: inline-block;
+}
+
+.movieCard__flex-container {
+  /* margin-left: 0.5rem; */
+  grid-column: span 3;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.movieCard__text-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
 }
 
 .movieCard__title {
@@ -137,7 +165,6 @@ body {
 .movieCard__title--big {
   grid-column: span 3;
   font-size: 2rem;
-  margin: 1rem 1rem 0.5rem;
 }
 
 .movieCard__text {
@@ -148,8 +175,7 @@ body {
 }
 
 .movieCard__text--plot {
-  margin: 0rem 1.2rem 0.5rem;
-  grid-column: span 3;
+  margin: 1rem 1.2rem 2rem;
 }
 
 .movieCard__text--short {
@@ -157,28 +183,20 @@ body {
 }
 .movieCard__text--long {
   color: var(--text-yellow);
-  grid-column: span 3;
-  grid-auto-rows: auto;
   margin-left: 1.2rem;
 }
 
-.movieCard__flex-container {
-  margin-left: 1.2rem;
-  grid-column: span 3;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  gap: 1rem;
+.movieCard__text--award {
+  margin-top: 1rem;
+  font-size: 1.2rem;
 }
 
-.movie-information {
-  margin-top: 2rem;
-  display: grid;
-  /* grid-template-columns: repeat(4, 1fr); */
-  grid-template-columns: auto 1fr;
-  grid-auto-flow: row dense;
-  /* grid-template-rows: repeat(6, 60px);
-  grid-row: auto; */
+.heart-symbol {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: red;
+  font-size: 4rem;
 }
 
 @media screen and (max-width: 810px) {
@@ -186,18 +204,34 @@ body {
     font-size: 1.5rem;
     margin: 1rem 1rem 0.5rem;
   }
+
+  .movieCard__flex-container {
+    margin: 0.2rem 1rem 0.5rem;
+  }
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 750px) {
   .movie-information {
     justify-items: center;
+    padding-left: 0;
   }
-  .movieCard__img--grid {
+
+  .movieCard__img-container {
     grid-column: span 4;
   }
+  /* .movieCard__img--grid {
+    grid-column: span 4;
+  } */
+
+  .movieCard__text-content {
+    padding: 2rem;
+  }
+
   .movieCard__title--big {
-    grid-column: span 4;
+    margin: 0;
+    font-size: 2rem;
   }
+
   .movieCard__flex-container {
     margin: 0 0 1rem;
     grid-column: span 4;
@@ -207,6 +241,9 @@ body {
   }
   .movieCard__text--plot {
     grid-column: span 4;
-    margin: 0 2rem;
+    margin: 0 0 1.5rem;
+  }
+  .movieCard__text--long {
+    margin-left: 0;
   }
 }
