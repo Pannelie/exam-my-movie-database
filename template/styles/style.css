@@ -154,7 +154,7 @@ body {
 }
 
 .movieCard__title {
-  color: white;
+  color: var(--primary-white);
   font-family: var(--main-font-family);
 }
 
@@ -169,7 +169,7 @@ body {
 }
 
 .movieCard__text {
-  color: white;
+  color: var(--primary-white);
   text-align: justify;
   font-family: var(--main-font-family);
   line-height: 1.5;
