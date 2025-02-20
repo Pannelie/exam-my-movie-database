@@ -17,6 +17,7 @@ export function renderMovies(movies, container) {
     .map(
       (movie) =>
         `<article class="movieCard__article" data-id="${movie.imdbID}">
+        <i class="fa-regular fa-heart heart-symbol"></i>
           <img src="${movie.Poster}" alt="${movie.Title}" class="movieCard__img">
           <p class="movieCard__title movieCard__title--small">${movie.Title}</p>
         </article>`
