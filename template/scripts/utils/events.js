@@ -46,17 +46,9 @@ export function toggleHeart(heartSymbol) {
   }
 }
 
-export function updateHeartIcon(button, movieId) {
-  const favorites = getFavorites();
-  const heartIcon = button.querySelector(`li`);
-
-  if (favorites.includes(movieId)) {
-    heartIcon.classList.remove("fa-regular");
-    heartIcon.classList.add("fa-solid");
-  } else {
-    heartIcon.classList.remove("fa-solid");
-    heartIcon.classList.add("fa-regular");
-  }
+export function updateHeartIcon() {
+  console.log(`uppdateradicon`);
+  toggleHeart();
 }
 
 document.addEventListener("DOMContentLoaded", async () => {

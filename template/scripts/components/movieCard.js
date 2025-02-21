@@ -20,7 +20,7 @@ export function renderMovies(movies, container) {
     const movieId = heartIcon
       .closest(".movieCard__article")
       .getAttribute("data-id");
-    updateHeartIcon(heartIcon, movieId);
+    updateHeartIcon();
   });
 }
 
