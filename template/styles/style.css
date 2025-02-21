@@ -198,10 +198,13 @@ body {
   right: 5px;
   border: none;
   cursor: pointer;
+  background-color: #000000;
 }
-
+.fav-btn:hover {
+  background-color: var(--text-yellow);
+}
 .heart-symbol {
-  background-color: black;
+  /* background-color: black; */
   padding: 0.5rem;
   border-radius: 10px;
   color: var(--primary-white);

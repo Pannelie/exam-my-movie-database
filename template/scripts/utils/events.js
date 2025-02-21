@@ -3,35 +3,37 @@ import { fetchMovies, fetchFullOmdb } from "../modules/api.js";
 import { saveFavorite, getFavorites } from "./storage.js";
 import { fullSingleMovie } from "../components/movieCard.js";
 
-export function addMovieClickListeners() {
+export async function addMovieClickListeners() {
   const movieArticles = document.querySelectorAll(".movieCard__article");
 
-  movieArticles.forEach((article) => {
-    article.addEventListener("click", (event) => {
+  for (const article of movieArticles) {
+    const movieId = article.getAttribute("data-id");
+    const image = article.querySelector(`.movieCard__img`);
+    const button = article.querySelector(`.fav-btn`);
+    //lyssnare på bilden
+    image.addEventListener("click", (event) => {
       console.log(`Klickade på:`, event.target);
-      const movieId = article.getAttribute("data-id");
 
       if (!movieId) {
         console.error("Ingen data-id hittad!");
         return;
       }
 
-      if (event.target.classList.contains(`fav-btn`)) {
-        event.stopPropagation();
-        saveFavorite(movieId);
-        updateHeartIcon(event.target, movieId);
-        return;
-      }
-
       // Navigera till den nya sidan och skicka med movieId i URL-parametern
       window.location.href = `/template/movie.html?id=${movieId}`;
     });
-  });
+    button.addEventListener(`click`, async (event) => {
+      console.log(`favorit klickad`);
+      const info = await fetchFullOmdb(movieId);
+      console.log(`information om:`, info);
+
+      saveFavorite(info);
+    });
+  }
 }
 
 export function updateHeartIcon(button, movieId) {
   const favorites = getFavorites();
-
   const heartIcon = button.querySelector(`li`);
 
   if (favorites.includes(movieId)) {
