@@ -2,10 +2,7 @@
 // innerhtml frånm variabel
 
 import { getFavorites } from "/template/scripts/utils/storage.js";
-
-// knapp för att lägga till favorit med add-eventlistener.
-
-import { addMovieClickListeners } from "../utils/events.js";
+import { addMovieClickListeners, updateHeartIcon } from "../utils/events.js";
 
 export function renderMovies(movies, container) {
   if (!container) {
@@ -13,51 +10,67 @@ export function renderMovies(movies, container) {
     return;
   }
 
-  container.innerHTML = movies
-    .map(
-      (movie) =>
-        `<article class="movieCard__article" data-id="${movie.imdbID}">
-        <i class="fa-regular fa-heart heart-symbol"></i>
-          <img src="${movie.Poster}" alt="${movie.Title}" class="movieCard__img">
-          <p class="movieCard__title movieCard__title--small">${movie.Title}</p>
-        </article>`
-    )
-    .join("");
+  container.innerHTML = movies.map(createCard).join("");
 
   // Lägg till event listeners efter renderingen
-  addMovieClickListeners();
+  setTimeout(() => {
+    addMovieClickListeners();
+  }, 0);
+  document.querySelectorAll(".fav-btn").forEach((heartIcon) => {
+    const movieId = heartIcon
+      .closest(".movieCard__article")
+      .getAttribute("data-id");
+    updateHeartIcon(heartIcon, movieId);
+  });
 }
 
-//
-//
-//
-//
-//
-//
-// // // Funktioner för att visa innehåll
-// export function showAllCards(container) {
-//   // Här kan du lägga till alla kort som finns på index-sidan
-//   container.innerHTML = "<div>Alla kort här...</div>";
-// }
+export function createCard(movie) {
+  return `
+  <article class="movieCard__article" data-id="${movie.imdbID}">
+  <button class="fav-btn"><i class="fa-regular fa-heart heart-symbol"></i></button>
+    <img src="${movie.Poster}" alt="${movie.Title}" class="movieCard__img">
+    <p class="movieCard__title movieCard__title--small">${movie.Title}</p>
+  </article>`;
+}
 
-// export function showFavorites(container) {
-//   // Hämta favoriter från localStorage och visa dem
-//   getFavorites();
-//   container.innerHTML = ""; // Rensa befintligt innehåll
-
-//   favorites.forEach((favorite) => {
-//     const card = createArticle();
-//     card.textContent = favorite.title; // Visa titel eller annan information
-//     appChild(container, card);
-//   });
-// }
-
-// export function showMovieDetails(container) {
-//   // Här kan du lägga till logik för att visa detaljer om en film
-//   container.innerHTML = "<div>Film detajer här...</div>";
-// }
-
-// export function showSearchResults(container) {
-//   // Visa sökresultat, kanske genom att hämta data från en sökning
-//   container.innerHTML = "<div>Sökresultat här...</div>";
-// }
+export function fullSingleMovie(movieData) {
+  return `
+        <section class="movieCard__img-container">
+        <img src="${movieData.Poster}" alt="${movieData.Title} poster" 
+            class="movieCard__img movieCard__img--grid" />
+            <button class="fav-btn"><i class="fa-regular fa-heart heart-symbol"></i></button>
+        </section>
+        <section class="movieCard__text-content">
+            <h2 class="movieCard__title movieCard__title--big">${
+              movieData.Title
+            }</h2>
+            <section class="movieCard__flex-container">
+                <p class="movieCard__text movieCard__text--short">${
+                  movieData.Genre
+                }</p>
+                <p class="movieCard__text movieCard__text--short">${
+                  movieData.Year
+                }</p>
+                <p class="movieCard__text movieCard__text--short">${
+                  movieData.Runtime
+                }</p>
+            </section>
+            <p class="movieCard__text movieCard__text--plot">${
+              movieData.Plot || `Hittade ingen beskrivning`
+            }
+            </p>
+            ${
+              movieData.Director && movieData.Director !== "N/A"
+                ? `<p class="movieCard__text movieCard__text--long"><strong>Director:</strong> ${movieData.Director}</p>`
+                : ""
+            }
+        <p class="movieCard__text movieCard__text--long"><strong>Actors:</strong> ${
+          movieData.Actors
+        }</p>
+        ${
+          movieData.Awards && movieData.Awards !== "N/A"
+            ? `<p class="movieCard__text movieCard__text--long movieCard__text--award">${movieData.Awards}</p>`
+            : ""
+        }</section>
+          `;
+}

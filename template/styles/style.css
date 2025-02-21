@@ -89,7 +89,7 @@ body {
 
 .card-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   grid-template-rows: 550px;
   gap: 1rem;
   justify-items: center;
@@ -191,17 +191,24 @@ body {
   margin-top: 1rem;
   font-size: 1.2rem;
 }
-
-.heart-symbol {
+.fav-btn {
   position: absolute;
   border-radius: 10px;
-  background-color: black;
-  padding: 0.5rem;
   top: 5px;
   right: 5px;
+  border: none;
+  cursor: pointer;
+  background-color: #000000;
+}
+.heart-symbol:hover {
+  background-color: var(--text-yellow);
+}
+.heart-symbol {
+  background-color: black;
+  padding: 0.5rem;
+  border-radius: 10px;
   color: var(--primary-white);
   font-size: 2rem;
-  cursor: pointer;
 }
 
 @media screen and (max-width: 810px) {
