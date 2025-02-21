@@ -200,11 +200,11 @@ body {
   cursor: pointer;
   background-color: #000000;
 }
-.fav-btn:hover {
+.heart-symbol:hover {
   background-color: var(--text-yellow);
 }
 .heart-symbol {
-  /* background-color: black; */
+  background-color: black;
   padding: 0.5rem;
   border-radius: 10px;
   color: var(--primary-white);

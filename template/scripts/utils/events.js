@@ -10,6 +10,7 @@ export async function addMovieClickListeners() {
     const movieId = article.getAttribute("data-id");
     const image = article.querySelector(`.movieCard__img`);
     const button = article.querySelector(`.fav-btn`);
+    const heartSymbol = article.querySelector(`.fav-btn .heart-symbol`);
     //lyssnare på bilden
     image.addEventListener("click", (event) => {
       console.log(`Klickade på:`, event.target);
@@ -26,9 +27,22 @@ export async function addMovieClickListeners() {
       console.log(`favorit klickad`);
       const info = await fetchFullOmdb(movieId);
       console.log(`information om:`, info);
+      toggleHeart(heartSymbol);
 
       saveFavorite(info);
     });
+  }
+}
+
+export function toggleHeart(heartSymbol) {
+  if (heartSymbol.classList.contains("fa-regular")) {
+    console.log(`changing color to yellow`);
+    heartSymbol.classList.remove("fa-regular");
+    heartSymbol.classList.add("fa-solid");
+  } else {
+    console.log(`changing color to black`);
+    heartSymbol.classList.remove("fa-solid");
+    heartSymbol.classList.add("fa-regular");
   }
 }
 
