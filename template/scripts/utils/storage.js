@@ -2,34 +2,33 @@
 
 const storageKey = `favoriteMovies`;
 
-//spara mina favoriter i localStorage
-export function saveFavorites(movies) {
-  localStorage.setItem(storageKey, JSON.stringify(movies));
-}
-
-//hämta mina favoriter
 export function getFavorites() {
-  const storedFavorites = localStorage.getItem(storageKey);
-  return storedFavorites ? JSON.parse(storedFavorites) : [];
+  JSON.parse(localStorage.getItem("favorites")) || []; // Returnerar en tom array om inga favoriter finns
 }
 
-// Funktion för att toggla mellan att lägga till och ta bort från favoriter
-export function toggleFavorite(movie, button) {
+export function saveFavorite(movieId) {
   let favorites = getFavorites();
 
-  // Kontrollera om filmen redan finns i favoriter
-  const movieIndex = favorites.findIndex((fav) => fav.title === movie.title);
+  console.log("Favoriter innan ändring:", favorites);
 
-  if (movieIndex === -1) {
-    // Om filmen inte finns, lägg till den
-    favorites.push(movie);
-    button.textContent = "Ta bort favorit"; // Uppdatera knapptexten
+  if (favorites.includes(movieId)) {
+    // Om filmen redan är en favorit, ta bort den
+    favorites = favorites.filter((id) => id !== movieId);
+    console.log(`Film med ID ${movieId} togs bort från favoriter.`);
   } else {
-    // Om filmen finns, ta bort den
-    favorites.splice(movieIndex, 1);
-    button.textContent = "Lägg till favorit"; // Uppdatera knapptexten
+    // Annars, lägg till den i favoriter
+    favorites.push(movieId);
+    console.log(`Film med ID ${movieId} lades till i favoriter.`);
   }
 
-  // Spara den uppdaterade listan av favoriter
-  saveFavorites(favorites);
+  localStorage.setItem("favorites", JSON.stringify(favorites)); // Spara uppdaterad lista
+
+  console.log("Favoriter efter ändring:", favorites);
 }
+
+// //spara mina favoriter i localStorage
+// export function saveFavorites(movies) {
+//   localStorage.setItem(storageKey, JSON.stringify(movies));
+// }
+
+// //hämta mina favoriter

@@ -2,10 +2,7 @@
 // innerhtml frånm variabel
 
 import { getFavorites } from "/template/scripts/utils/storage.js";
-
-// knapp för att lägga till favorit med add-eventlistener.
-
-import { addMovieClickListeners } from "../utils/events.js";
+import { addMovieClickListeners, updateHeartIcon } from "../utils/events.js";
 
 export function renderMovies(movies, container) {
   if (!container) {
@@ -13,51 +10,25 @@ export function renderMovies(movies, container) {
     return;
   }
 
-  container.innerHTML = movies
-    .map(
-      (movie) =>
-        `<article class="movieCard__article" data-id="${movie.imdbID}">
-        <i class="fa-regular fa-heart heart-symbol"></i>
-          <img src="${movie.Poster}" alt="${movie.Title}" class="movieCard__img">
-          <p class="movieCard__title movieCard__title--small">${movie.Title}</p>
-        </article>`
-    )
-    .join("");
+  container.innerHTML = movies.map(createCard).join("");
 
   // Lägg till event listeners efter renderingen
-  addMovieClickListeners();
+  setTimeout(() => {
+    addMovieClickListeners();
+  }, 0);
+  document.querySelectorAll(".fav-btn").forEach((heartIcon) => {
+    const movieId = heartIcon
+      .closest(".movieCard__article")
+      .getAttribute("data-id");
+    updateHeartIcon(heartIcon, movieId);
+  });
 }
 
-//
-//
-//
-//
-//
-//
-// // // Funktioner för att visa innehåll
-// export function showAllCards(container) {
-//   // Här kan du lägga till alla kort som finns på index-sidan
-//   container.innerHTML = "<div>Alla kort här...</div>";
-// }
-
-// export function showFavorites(container) {
-//   // Hämta favoriter från localStorage och visa dem
-//   getFavorites();
-//   container.innerHTML = ""; // Rensa befintligt innehåll
-
-//   favorites.forEach((favorite) => {
-//     const card = createArticle();
-//     card.textContent = favorite.title; // Visa titel eller annan information
-//     appChild(container, card);
-//   });
-// }
-
-// export function showMovieDetails(container) {
-//   // Här kan du lägga till logik för att visa detaljer om en film
-//   container.innerHTML = "<div>Film detajer här...</div>";
-// }
-
-// export function showSearchResults(container) {
-//   // Visa sökresultat, kanske genom att hämta data från en sökning
-//   container.innerHTML = "<div>Sökresultat här...</div>";
-// }
+export function createCard(movie) {
+  return `
+  <article class="movieCard__article" data-id="${movie.imdbID}">
+  <button class="fav-btn"><i class="fa-regular fa-heart heart-symbol"></i></button>
+    <img src="${movie.Poster}" alt="${movie.Title}" class="movieCard__img">
+    <p class="movieCard__title movieCard__title--small">${movie.Title}</p>
+  </article>`;
+}
