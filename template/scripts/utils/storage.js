@@ -1,12 +1,10 @@
 //plats för att lagra mina favoriter
-
-const storageKey = `favoriteMovies`;
-
 export function getFavorites() {
   JSON.parse(localStorage.getItem("favorites")) || []; // Returnerar en tom array om inga favoriter finns
 }
 
 export function saveFavorite(movieId) {
+  console.log(saveFavorite);
   let favorites = getFavorites();
 
   console.log("Favoriter innan ändring:", favorites);
@@ -25,10 +23,3 @@ export function saveFavorite(movieId) {
 
   console.log("Favoriter efter ändring:", favorites);
 }
-
-// //spara mina favoriter i localStorage
-// export function saveFavorites(movies) {
-//   localStorage.setItem(storageKey, JSON.stringify(movies));
-// }
-
-// //hämta mina favoriter

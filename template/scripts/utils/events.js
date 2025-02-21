@@ -1,6 +1,7 @@
 import { movieInformationRef, createElement, appChild } from "./domUtils.js";
-import { fetchFullOmdb } from "../modules/api.js";
+import { fetchMovies, fetchFullOmdb } from "../modules/api.js";
 import { saveFavorite, getFavorites } from "./storage.js";
+import { fullSingleMovie } from "../components/movieCard.js";
 
 export function addMovieClickListeners() {
   const movieArticles = document.querySelectorAll(".movieCard__article");
@@ -57,49 +58,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const movieData = await fetchFullOmdb(movieId);
 
     if (movieData && movieData.Response !== "False") {
-      // Skapa HTML-innehåll för filmen
-      const singleMovie = `
-        <section class="movieCard__img-container">
-        <img src="${movieData.Poster}" alt="${movieData.Title} poster" 
-            class="movieCard__img movieCard__img--grid" />
-            <i class="fa-regular fa-heart heart-symbol"></i>
-        </section>
-        <section class="movieCard__text-content">
-            <h2 class="movieCard__title movieCard__title--big">${
-              movieData.Title
-            }</h2>
-            <section class="movieCard__flex-container">
-                <p class="movieCard__text movieCard__text--short">${
-                  movieData.Genre
-                }</p>
-                <p class="movieCard__text movieCard__text--short">${
-                  movieData.Year
-                }</p>
-                <p class="movieCard__text movieCard__text--short">${
-                  movieData.Runtime
-                }</p>
-            </section>
-            <p class="movieCard__text movieCard__text--plot">${
-              movieData.Plot || `Hittade ingen beskrivning`
-            }
-            </p>
-            ${
-              movieData.Director && movieData.Director !== "N/A"
-                ? `<p class="movieCard__text movieCard__text--long"><strong>Director:</strong> ${movieData.Director}</p>`
-                : ""
-            }
-        <p class="movieCard__text movieCard__text--long"><strong>Actors:</strong> ${
-          movieData.Actors
-        }</p>
-        ${
-          movieData.Awards && movieData.Awards !== "N/A"
-            ? `<p class="movieCard__text movieCard__text--long movieCard__text--award">${movieData.Awards}</p>`
-            : ""
-        }</section>
-          `;
-
-      // Sätt innehållet i #movieInformation
-      movieInformationRef.innerHTML = singleMovie;
+      // Sätt innehållet från functionen singleMovie (html)
+      movieInformationRef.innerHTML = fullSingleMovie(movieData);
     } else {
       console.error("Ingen film hittades med det ID:t.");
     }
