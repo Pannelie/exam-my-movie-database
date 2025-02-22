@@ -35,7 +35,7 @@ export function createCard(movie) {
 
 export function fullSingleMovie(movieData) {
   return `
-        <article class="movieCard__article">
+        <article class="movieCard__article" data-id="${movieData.imdbID}">
         <img src="${movieData.Poster}" alt="${movieData.Title} poster" 
             class="movieCard__img movieCard__img--grid" />
             <button class="fav-btn"><i class="fa-regular fa-heart heart-symbol"></i></button>

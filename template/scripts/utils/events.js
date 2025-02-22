@@ -3,6 +3,22 @@ import { fetchMovies, fetchFullOmdb } from "../modules/api.js";
 import { saveFavorite, getFavorites } from "./storage.js";
 import { fullSingleMovie } from "../components/movieCard.js";
 
+export async function addsingleFavListener() {
+  const movieArticles = document.querySelectorAll(".movieCard__article");
+  console.log(movieArticles);
+
+  for (const article of movieArticles) {
+    const movieId = article.getAttribute(`data-id`);
+    const button = article.querySelector(`.fav-btn`);
+    const heartSymbol = article.querySelector(`.fav-btn .heart-symbol`);
+    console.log(`mitt hjärtelement`, heartSymbol);
+
+    button.addEventListener(`click`, async (event) => {
+      favEventListener(movieId, heartSymbol);
+    });
+  }
+}
+
 export async function addMovieClickListeners() {
   const movieArticles = document.querySelectorAll(".movieCard__article");
 

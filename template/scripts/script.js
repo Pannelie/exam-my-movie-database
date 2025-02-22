@@ -1,5 +1,8 @@
 import { fetchTrailers, fetchMovies } from "./modules/api.js";
-import { addMovieClickListeners } from "./utils/events.js";
+import {
+  addMovieClickListeners,
+  addsingleFavListener,
+} from "./utils/events.js";
 import { renderMovies } from "./components/movieCard.js";
 import { cardContainerRef } from "./utils/domUtils.js";
 import { showFavorites } from "./utils/storage.js";
@@ -31,6 +34,7 @@ async function handlePageLoad() {
     }
   } else if (path === "/template/favorites.html") {
     console.log("favorites.html");
+    addsingleFavListener();
     showFavorites();
   } else if (path === "/template/movie.html") {
     console.log("movie.html");
