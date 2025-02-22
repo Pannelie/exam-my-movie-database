@@ -1,6 +1,10 @@
 import { movieInformationRef, createElement, appChild } from "./domUtils.js";
 import { fetchMovies, fetchFullOmdb } from "../modules/api.js";
-import { saveFavorite, getFavorites } from "./storage.js";
+import {
+  saveFavorite,
+  getFavorites,
+  updateFavoriteButtons,
+} from "./storage.js";
 import { fullSingleMovie } from "../components/movieCard.js";
 
 export async function addsingleFavListener() {
@@ -53,59 +57,42 @@ export async function addMovieClickListeners() {
 //   toggleFavorite();
 // }
 
-export async function toggleFavorite(event) {
-  const button = event.target.closest(".fav-btn");
-  console.log(button);
-  const movieId = button.getAttribute("data-id");
-  const info = await fetchFullOmdb(movieId);
+// export async function toggleFavorite(event) {
+//   const button = event.target.closest(".fav-btn");
+//   console.log(button);
+//   const movieId = button.getAttribute("data-id");
+//   const info = await fetchFullOmdb(movieId);
 
-  let favorites = getFavorites();
-  console.log("Favorites before toggle:", favorites);
+//   let favorites = getFavorites();
+//   console.log("Favorites before toggle:", favorites);
 
-  const heartSymbol = button.querySelector("i");
+//   const heartSymbol = button.querySelector("i");
 
-  console.log(`det här är favorite info:`, favorites[movieId]);
-  if (favorites.includes(movieId)) {
-    favorites = favorites.filter((id) => id !== info);
-    console.log(`changing to non-favorite`);
-    heartSymbol.classList.remove("fa-solid");
-    heartSymbol.classList.add("fa-regular");
-    if (window.location.pathname.includes("favorites.html")) {
-      button.closest("article").remove();
-    }
-  } else {
-    favorites.push(info);
-    console.log(`changing color to favorite`);
-    heartSymbol.classList.remove("fa-regular");
-    heartSymbol.classList.add("fa-solid");
-  }
-  localStorage.setItem("favorites", JSON.stringify(favorites)); // Spara uppdaterade favoriter
-  console.log("Favorites after toggle:", favorites);
-}
+//   console.log(`det här är favorite info:`, favorites[movieId]);
+//   if (favorites.includes(movieId)) {
+//     favorites = favorites.filter((id) => id !== info);
+//     console.log(`changing to non-favorite`);
+//     heartSymbol.classList.remove("fa-solid");
+//     heartSymbol.classList.add("fa-regular");
+//     if (window.location.pathname.includes("favorites.html")) {
+//       button.closest("article").remove();
+//     }
+//   } else {
+//     favorites.push(info);
+//     console.log(`changing color to favorite`);
+//     heartSymbol.classList.remove("fa-regular");
+//     heartSymbol.classList.add("fa-solid");
+//   }
+//   localStorage.setItem("favorites", JSON.stringify(favorites)); // Spara uppdaterade favoriter
+//   console.log("Favorites after toggle:", favorites);
+// }
 
 document.addEventListener("click", (event) => {
   const button = event.target.closest(".fav-btn");
   if (button) {
-    toggleFavorite(event);
+    saveFavorite(event);
   }
 });
-
-export function toggleHeart(heartSymbol) {
-  if (heartSymbol.classList.contains("fa-regular")) {
-    console.log(`changing color to yellow`);
-    heartSymbol.classList.remove("fa-regular");
-    heartSymbol.classList.add("fa-solid");
-  } else {
-    console.log(`changing color to black`);
-    heartSymbol.classList.remove("fa-solid");
-    heartSymbol.classList.add("fa-regular");
-  }
-}
-
-export function updateHeartIcon() {
-  console.log(`uppdateradicon`);
-  toggleHeart();
-}
 
 document.addEventListener("DOMContentLoaded", async () => {
   // Hämta movieId från URL-parametern
@@ -124,6 +111,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (movieData && movieData.Response !== "False") {
       // Sätt innehållet från functionen singleMovie (html)
       movieInformationRef.innerHTML = fullSingleMovie(movieData);
+      updateFavoriteButtons();
     } else {
       console.error("Ingen film hittades med det ID:t.");
     }
@@ -131,86 +119,3 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Fel vid hämtning av filminformation:", error);
   }
 });
-
-// document.addEventListener("DOMContentLoaded", async () => {
-//   // Hämta movieId från URL-parametern
-//   const urlParams = new URLSearchParams(window.location.search);
-//   const movieId = urlParams.get("id");
-
-//   if (!movieId) {
-//     console.error("Ingen movieId hittades i URL-parametrarna.");
-//     return;
-//   }
-
-//   try {
-//     // Hämta alla filmer från fetchMovies
-
-//     // const allMovies = await fetchFullOmdb(movieId);
-//     const allMovies = await fetchMovies();
-//     const movieData = allMovies.find((movie) => movie.imdbID === movieId);
-
-//     if (movieData) {
-//       // Skapa HTML-innehåll för filmen
-//       const singleMovie = `
-//           <h2 class="movieCard__title movieCard__title--big">${
-//             movieData.Title
-//           }</h2>
-//           <img src="${movieData.Poster}" alt="${
-//         movieData.Title
-//       } poster" class="movieCard__img movieCard__img--grid" />
-//           <p class="movieCard__text">${
-//             movieData.description || `Hittade ingen beskrivning`
-//           }</p>
-//         `;
-
-//       // Sätt innehållet i #movieInformation
-//       movieInformationRef.innerHTML = singleMovie;
-//     } else {
-//       console.error("Ingen film hittades med det ID:t.");
-//     }
-//   } catch (error) {
-//     console.error("Fel vid hämtning av filminformation:", error);
-//   }
-// });
-
-// export function addMovieClickListeners() {
-//   const movieArticles = document.querySelectorAll(".movieCard__article");
-
-//   movieArticles.forEach((article) => {
-//     article.addEventListener("click", async () => {
-//       const movieId = article.getAttribute("data-id");
-
-//       if (!movieId) {
-//         console.error("Ingen data-id hittad!");
-//         return;
-//       }
-
-//       try {
-//         // Hämta alla filmer från fetchMovies
-//         const allMovies = await fetchMovies();
-//         console.log(allMovies);
-
-//         // Hitta filmen med det aktuella movieId
-//         const movieData = allMovies.find((movie) => movie.imdbID === movieId);
-
-//         console.log(movieData);
-//         if (movieData) {
-//           const singleMovie = `
-//               <h2>${movieData.Title}</h2>
-//               <img src="${movieData.Poster}" alt="${movieData.Title} poster" />
-//               <p>${movieData.description || `ingen beskrivning tillgänglig`}</p>
-//             `;
-//           console.log(singleMovie);
-//           document.querySelector(`#movieInformation`).innerHTML = singleMovie;
-
-//           // Navigera till den separata film-sidan
-//           window.location.href = `/template/movie.html?id=${movieId}`;
-//         } else {
-//           console.error("Filminformation hittades inte.");
-//         }
-//       } catch (error) {
-//         console.error("Fel vid hämtning av filminformation:", error);
-//       }
-//     });
-//   });
-// }

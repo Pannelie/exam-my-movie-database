@@ -1,8 +1,8 @@
 //skapande av varje film-kort, stor och liten variant?
 // innerhtml frånm variabel
 
-import { getFavorites } from "/template/scripts/utils/storage.js";
-import { addMovieClickListeners, updateHeartIcon } from "../utils/events.js";
+import { addMovieClickListeners } from "../utils/events.js";
+import { updateFavoriteButtons } from "../utils/storage.js";
 
 export function renderMovies(movies, container) {
   if (!container) {
@@ -16,12 +16,6 @@ export function renderMovies(movies, container) {
   setTimeout(() => {
     addMovieClickListeners();
   }, 0);
-  document.querySelectorAll(".fav-btn").forEach((heartIcon) => {
-    const movieId = heartIcon
-      .closest(".movieCard__article")
-      .getAttribute("data-id");
-    updateHeartIcon();
-  });
 }
 
 export function createCard(movie) {

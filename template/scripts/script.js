@@ -2,11 +2,10 @@ import { fetchTrailers, fetchMovies } from "./modules/api.js";
 import {
   addMovieClickListeners,
   addsingleFavListener,
-  toggleFavorite,
 } from "./utils/events.js";
 import { renderMovies } from "./components/movieCard.js";
 import { cardContainerRef } from "./utils/domUtils.js";
-import { showFavorites } from "./utils/storage.js";
+import { showFavorites, updateFavoriteButtons } from "./utils/storage.js";
 
 // Funktion som hanterar varje sidtyp
 async function handlePageLoad() {
@@ -26,6 +25,8 @@ async function handlePageLoad() {
 
       if (movies.length > 0) {
         renderMovies(movies, cardContainerRef);
+        updateFavoriteButtons();
+
         // toggleFavorite(event);
         // addMovieClickListeners(); // Lägg till event efter renderingen
       } else {
@@ -38,6 +39,7 @@ async function handlePageLoad() {
     console.log("favorites.html");
     // addsingleFavListener();
     showFavorites();
+    updateFavoriteButtons();
   } else if (path === "/template/movie.html") {
     console.log("movie.html");
   } else if (path === "/template/search.html") {
