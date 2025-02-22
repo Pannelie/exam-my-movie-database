@@ -26,14 +26,18 @@ export async function addMovieClickListeners() {
       window.location.href = `/template/movie.html?id=${movieId}`;
     });
     button.addEventListener(`click`, async (event) => {
-      console.log(`favorit klickad`);
-      const info = await fetchFullOmdb(movieId);
-      console.log(`information om:`, info);
-      toggleHeart(heartSymbol);
-
-      saveFavorite(info);
+      favEventListener(movieId, heartSymbol);
     });
   }
+}
+
+export async function favEventListener(movieId, heartSymbol) {
+  console.log(`favorit klickad`);
+  const info = await fetchFullOmdb(movieId);
+  console.log(`information om:`, info);
+  toggleHeart(heartSymbol);
+
+  saveFavorite(info);
 }
 
 export function toggleHeart(heartSymbol) {
