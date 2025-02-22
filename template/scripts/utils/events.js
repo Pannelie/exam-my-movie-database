@@ -11,6 +11,8 @@ export async function addMovieClickListeners() {
     const image = article.querySelector(`.movieCard__img`);
     const button = article.querySelector(`.fav-btn`);
     const heartSymbol = article.querySelector(`.fav-btn .heart-symbol`);
+    console.log(`mitt hjärtelement`, heartSymbol);
+
     //lyssnare på bilden
     image.addEventListener("click", (event) => {
       console.log(`Klickade på:`, event.target);

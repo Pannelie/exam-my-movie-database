@@ -28,18 +28,18 @@ export function createCard(movie) {
   return `
   <article class="movieCard__article" data-id="${movie.imdbID}">
   <button class="fav-btn"><i class="fa-regular fa-heart heart-symbol"></i></button>
-    <img src="${movie.Poster}" alt="${movie.Title}" class="movieCard__img">
+    <img src="${movie.Poster}" alt="${movie.Title}" class="movieCard__img movieCard__img--zoom">
     <p class="movieCard__title movieCard__title--small">${movie.Title}</p>
   </article>`;
 }
 
 export function fullSingleMovie(movieData) {
   return `
-        <section class="movieCard__img-container">
+        <article class="movieCard__article">
         <img src="${movieData.Poster}" alt="${movieData.Title} poster" 
             class="movieCard__img movieCard__img--grid" />
             <button class="fav-btn"><i class="fa-regular fa-heart heart-symbol"></i></button>
-        </section>
+        </article>
         <section class="movieCard__text-content">
             <h2 class="movieCard__title movieCard__title--big">${
               movieData.Title

@@ -1,3 +1,6 @@
+import { cardContainerRef } from "./domUtils.js";
+import { createCard } from "../components/movieCard.js";
+
 //plats för att lagra mina favoriter
 export function getFavorites() {
   const favorites = localStorage.getItem("favorites");
@@ -25,4 +28,15 @@ export function saveFavorite(info) {
   localStorage.setItem("favorites", JSON.stringify(favorites)); // Spara uppdaterad lista
 
   console.log("Favoriter efter ändring:", favorites);
+}
+
+export function showFavorites() {
+  const favorites = getFavorites();
+
+  cardContainerRef.innerHTML = ``;
+
+  favorites.forEach((movie) => {
+    const movieCardHTML = createCard(movie);
+    cardContainerRef.innerHTML += movieCardHTML;
+  });
 }

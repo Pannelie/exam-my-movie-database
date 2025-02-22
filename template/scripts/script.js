@@ -2,6 +2,7 @@ import { fetchTrailers, fetchMovies } from "./modules/api.js";
 import { addMovieClickListeners } from "./utils/events.js";
 import { renderMovies } from "./components/movieCard.js";
 import { cardContainerRef } from "./utils/domUtils.js";
+import { showFavorites } from "./utils/storage.js";
 
 // Funktion som hanterar varje sidtyp
 async function handlePageLoad() {
@@ -30,6 +31,7 @@ async function handlePageLoad() {
     }
   } else if (path === "/template/favorites.html") {
     console.log("favorites.html");
+    showFavorites();
   } else if (path === "/template/movie.html") {
     console.log("movie.html");
   } else if (path === "/template/search.html") {
