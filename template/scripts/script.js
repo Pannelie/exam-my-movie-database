@@ -2,6 +2,7 @@ import { fetchTrailers, fetchMovies } from "./modules/api.js";
 import {
   addMovieClickListeners,
   addsingleFavListener,
+  toggleFavorite,
 } from "./utils/events.js";
 import { renderMovies } from "./components/movieCard.js";
 import { cardContainerRef } from "./utils/domUtils.js";
@@ -25,7 +26,8 @@ async function handlePageLoad() {
 
       if (movies.length > 0) {
         renderMovies(movies, cardContainerRef);
-        addMovieClickListeners(); // Lägg till event efter renderingen
+        // toggleFavorite(event);
+        // addMovieClickListeners(); // Lägg till event efter renderingen
       } else {
         console.error("Inga filmer att visa.");
       }
@@ -34,7 +36,7 @@ async function handlePageLoad() {
     }
   } else if (path === "/template/favorites.html") {
     console.log("favorites.html");
-    addsingleFavListener();
+    // addsingleFavListener();
     showFavorites();
   } else if (path === "/template/movie.html") {
     console.log("movie.html");

@@ -26,8 +26,8 @@ export function renderMovies(movies, container) {
 
 export function createCard(movie) {
   return `
-  <article class="movieCard__article" data-id="${movie.imdbID}">
-  <button class="fav-btn"><i class="fa-regular fa-heart heart-symbol"></i></button>
+  <article class="movieCard__article">
+  <button class="fav-btn" data-id="${movie.imdbID}"><i class="fa-regular fa-heart heart-symbol"></i></button>
     <img src="${movie.Poster}" alt="${movie.Title}" class="movieCard__img movieCard__img--zoom">
     <p class="movieCard__title movieCard__title--small">${movie.Title}</p>
   </article>`;
@@ -35,10 +35,12 @@ export function createCard(movie) {
 
 export function fullSingleMovie(movieData) {
   return `
-        <article class="movieCard__article" data-id="${movieData.imdbID}">
+        <article class="movieCard__article">
         <img src="${movieData.Poster}" alt="${movieData.Title} poster" 
             class="movieCard__img movieCard__img--grid" />
-            <button class="fav-btn"><i class="fa-regular fa-heart heart-symbol"></i></button>
+            <button class="fav-btn" data-id="${
+              movieData.imdbID
+            }"><i class="fa-regular fa-heart heart-symbol"></i></button>
         </article>
         <section class="movieCard__text-content">
             <h2 class="movieCard__title movieCard__title--big">${

@@ -1,6 +1,6 @@
 import { cardContainerRef } from "./domUtils.js";
 import { createCard } from "../components/movieCard.js";
-import { addsingleFavListener } from "./events.js";
+import { addsingleFavListener, toggleFavorite } from "./events.js";
 
 //plats för att lagra mina favoriter
 export function getFavorites() {
@@ -41,7 +41,7 @@ export function showFavorites() {
     cardContainerRef.innerHTML += movieCardHTML;
   });
 
-  setTimeout(() => {
-    addsingleFavListener();
-  }, 0);
+  // setTimeout(() => {
+  //   toggleFavorite();
+  // }, 0);
 }
