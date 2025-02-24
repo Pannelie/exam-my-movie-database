@@ -1,4 +1,4 @@
-import { fetchMovies, fetchFullOmdb } from "./modules/api.js";
+import { fetchMovies, fetchFullOmdb, fetchSearchOmdb } from "./modules/api.js";
 import { renderMovies, fullSingleMovie } from "./components/movieCard.js";
 import { cardContainerRef, movieInformationRef } from "./utils/domUtils.js";
 import { showFavorites, updateFavoriteButtons } from "./utils/storage.js";
@@ -21,11 +21,12 @@ async function handlePageLoad() {
     try {
       // fetchTrailers();
       const movies = await fetchMovies();
+      const allMovies = await fetchSearchOmdb(searchString);
       if (movies.length > 0) {
         renderRandomTrailers(movies);
         renderMovies(movies, cardContainerRef);
-
         updateFavoriteButtons();
+        setUpSearchForm(movies);
       } else {
         console.error("Inga filmer att visa.");
       }
@@ -36,8 +37,10 @@ async function handlePageLoad() {
     console.log("favorites.html");
     showFavorites();
     updateFavoriteButtons();
+    setUpSearchForm(movies);
   } else if (path === "/template/movie.html") {
     console.log("movie.html");
+    setUpSearchForm(movies);
     updateFavoriteButtons();
 
     if (!movieId) {
@@ -59,6 +62,7 @@ async function handlePageLoad() {
   } else if (path === "/template/search.html") {
     console.log("search.html");
     updateFavoriteButtons();
+    setUpSearchForm(movies);
   } else {
     console.warn("Okänd sida:", path);
   }

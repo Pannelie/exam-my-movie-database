@@ -14,3 +14,15 @@ export function createElement(tag) {
 export function appChild(container, item) {
   container.appendChild(item);
 }
+
+//searchfield
+export const searchInput = document.querySelector(`#searchInput`);
+
+export function querySelector(element) {
+  const item = document.querySelector(`element`);
+  return item;
+}
+
+export const searchBtn = document.querySelector(`#searchBtn`);
+
+export const formRef = document.querySelector(`#searchForm`);

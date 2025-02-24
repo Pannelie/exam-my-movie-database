@@ -1,4 +1,5 @@
 import { renderTrailers } from "../modules/caroussel.js";
+import { searchInput, formRef } from "./domUtils.js";
 //sortera film efter betyg, top 20
 
 // Stor bokstav i början
@@ -21,4 +22,16 @@ export function renderRandomTrailers(movies) {
   selectedTrailers.forEach((movie, index) => {
     renderTrailers(movie, index + 1); // Anpassa renderingen efter behov
   });
+}
+
+export function setUpSearchForm(movies) {
+  searchInput.addEventListener(`input`, (event) => {
+    console.log(searchInput);
+    updateAutoCompleteList(event.target.value.toLowerCase(), movies);
+  });
+}
+
+export function updateAutoCompleteList(input, movies) {
+  const matchingMovies = movies.filter((m) => m.name.includes(input));
+  console.log(matchingMovies);
 }
