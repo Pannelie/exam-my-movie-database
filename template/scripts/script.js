@@ -1,7 +1,8 @@
-import { fetchTrailers, fetchMovies, fetchFullOmdb } from "./modules/api.js";
+import { fetchMovies, fetchFullOmdb } from "./modules/api.js";
 import { renderMovies, fullSingleMovie } from "./components/movieCard.js";
 import { cardContainerRef, movieInformationRef } from "./utils/domUtils.js";
 import { showFavorites, updateFavoriteButtons } from "./utils/storage.js";
+import { renderRandomTrailers } from "./utils/utils.js";
 
 async function handlePageLoad() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -18,10 +19,12 @@ async function handlePageLoad() {
     console.log("index.html");
 
     try {
-      fetchTrailers();
+      // fetchTrailers();
       const movies = await fetchMovies();
       if (movies.length > 0) {
+        renderRandomTrailers(movies);
         renderMovies(movies, cardContainerRef);
+
         updateFavoriteButtons();
       } else {
         console.error("Inga filmer att visa.");
