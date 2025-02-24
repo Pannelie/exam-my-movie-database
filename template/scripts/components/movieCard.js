@@ -2,7 +2,7 @@
 // innerhtml frånm variabel
 
 import { addMovieClickListeners } from "../utils/events.js";
-import { updateFavoriteButtons } from "../utils/storage.js";
+// import { updateFavoriteButtons } from "../utils/storage.js";
 
 export function renderMovies(movies, container) {
   if (!container) {

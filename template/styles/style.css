@@ -124,17 +124,12 @@ body {
   object-fit: cover;
   border-radius: 0.6rem;
 }
-/* Zooma in BARA bilden vid hover */
-/* .movieCard__article:hover .movieCard__img {
-  height: 550px; /* Max höjd vid hover */
-/* max-width: 550px; Max bredd vid hover */
 
 .movieCard__img--zoom {
   transition: all 0.3s ease-in-out;
 }
 .movieCard__article:hover .movieCard__img--zoom {
   height: 550px; /* Max höjd vid hover */
-  /* max-width: 550px; Max bredd vid hover */
 }
 
 .movieCard__img-container {

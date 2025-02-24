@@ -15,10 +15,11 @@ export async function saveFavorite(event) {
   console.log(button);
   const movieId = button.getAttribute("data-id");
   const info = await fetchFullOmdb(movieId);
-  const heartSymbol = button.querySelector("i");
+  // const heartSymbol = button.querySelector(".heart-symbol");
 
   let favorites = getFavorites();
   console.log("Favoriter innan ändring:", favorites);
+  // console.log(`my heart:`, heartSymbol);
 
   const isAlreadyFavorite = favorites.some((fav) => fav.imdbID === info.imdbID);
 
@@ -26,8 +27,6 @@ export async function saveFavorite(event) {
     // Om filmen redan är en favorit, ta bort den
     favorites = favorites.filter((fav) => fav.imdbID !== info.imdbID);
     console.log(`Film med ID ${info.imdbID} togs bort från favoriter.`);
-    heartSymbol.classList.remove("fa-solid");
-    heartSymbol.classList.add("fa-regular");
 
     if (window.location.pathname.includes("favorites.html")) {
       button.closest("article").remove();
@@ -36,8 +35,6 @@ export async function saveFavorite(event) {
     // Annars, lägg till den i favoriter
     favorites.push(info);
     console.log(`Film med ID ${info.imdbID} lades till i favoriter`);
-    heartSymbol.classList.remove("fa-regular");
-    heartSymbol.classList.add("fa-solid");
   }
 
   localStorage.setItem("favorites", JSON.stringify(favorites)); // Spara uppdaterad lista
@@ -58,20 +55,19 @@ export function showFavorites() {
 }
 
 export function updateFavoriteButtons() {
-  const favorites = getFavorites(); // Hämtar favoriter från localStorage
-
-  // Gå igenom alla knappar med fav-btn-klassen
+  // Hämta alla knappar
   document.querySelectorAll(".fav-btn").forEach((button) => {
     const movieId = button.getAttribute("data-id");
+    const heartSymbol = button.querySelector(".heart-symbol");
 
-    const heartSymbol = button.querySelector("i");
+    // Hämta favoriter från localStorage
+    const favorites = getFavorites();
+    const isFavorite = favorites.some((fav) => fav.imdbID === movieId); // Kolla om filmen är en favorit
 
-    if (favorites.includes(movieId)) {
-      // Om filmen är en favorit, sätt hjärtat till solid
+    if (isFavorite) {
       heartSymbol.classList.remove("fa-regular");
       heartSymbol.classList.add("fa-solid");
     } else {
-      // Om filmen inte är en favorit, sätt hjärtat till regular
       heartSymbol.classList.remove("fa-solid");
       heartSymbol.classList.add("fa-regular");
     }
