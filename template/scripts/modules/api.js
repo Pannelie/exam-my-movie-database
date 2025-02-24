@@ -14,11 +14,22 @@ export async function fetchMovies() {
 
 //sökfunktion fetch, justerade söksträng till parameter vid anrop
 export async function fetchSearchOmdb(searchString) {
+  if (!searchString) return []; // Undvik onödiga API-anrop
+
   try {
     const response = await fetch(
-      `http://www.omdbapi.com/?apikey=${apiKey}&s=${searchString}`
+      `http://www.omdbapi.com/?apikey=${apiKey}&s=${encodeURIComponent(
+        searchString
+      )}`
     );
-    return await response.json();
+
+    if (!response.ok) {
+      throw new Error(`HTTP-fel! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    return data.Search || []; // Om `Search` saknas, returnera en tom array
   } catch (error) {
     console.error(`Fel vid hämtning av filmer:`, error);
     return [];

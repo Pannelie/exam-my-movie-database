@@ -2,14 +2,17 @@ import { fetchMovies, fetchFullOmdb, fetchSearchOmdb } from "./modules/api.js";
 import { renderMovies, fullSingleMovie } from "./components/movieCard.js";
 import { cardContainerRef, movieInformationRef } from "./utils/domUtils.js";
 import { showFavorites, updateFavoriteButtons } from "./utils/storage.js";
-import { renderRandomTrailers } from "./utils/utils.js";
+import { renderRandomTrailers, setUpSearchForm } from "./utils/utils.js";
 
 async function handlePageLoad() {
   const urlParams = new URLSearchParams(window.location.search);
   const movieId = urlParams.get("id");
   const path = window.location.pathname;
 
+  const movies = await fetchMovies();
+
   updateFavoriteButtons();
+  setUpSearchForm();
 
   if (
     path === "/template/" ||
@@ -20,8 +23,7 @@ async function handlePageLoad() {
 
     try {
       // fetchTrailers();
-      const movies = await fetchMovies();
-      const allMovies = await fetchSearchOmdb(searchString);
+
       if (movies.length > 0) {
         renderRandomTrailers(movies);
         renderMovies(movies, cardContainerRef);

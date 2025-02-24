@@ -26,3 +26,5 @@ export function querySelector(element) {
 export const searchBtn = document.querySelector(`#searchBtn`);
 
 export const formRef = document.querySelector(`#searchForm`);
+
+export const autocompleteListRef = document.querySelector(`#autocompleteList`);
