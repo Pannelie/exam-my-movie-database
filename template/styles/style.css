@@ -193,6 +193,8 @@ body {
   font-size: 1.2rem;
 }
 .fav-btn {
+  background-color: black;
+  border-radius: 10px;
   position: absolute;
   border-radius: 10px;
   top: 5px;
@@ -201,13 +203,12 @@ body {
   cursor: pointer;
   background-color: #000000;
 }
-.heart-symbol:hover {
+.fav-btn:hover {
   background-color: var(--text-yellow);
 }
+
 .heart-symbol {
-  background-color: black;
   padding: 0.5rem;
-  border-radius: 10px;
   color: var(--primary-white);
   font-size: 2rem;
 }

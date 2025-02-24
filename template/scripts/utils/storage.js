@@ -1,6 +1,6 @@
 import { cardContainerRef } from "./domUtils.js";
 import { createCard } from "../components/movieCard.js";
-import { addsingleFavListener } from "./events.js";
+import { addsingleFavListener, addMovieClickListeners } from "./events.js";
 import { fetchFullOmdb } from "../modules/api.js";
 
 //plats för att lagra mina favoriter
@@ -52,6 +52,9 @@ export function showFavorites() {
     const movieCardHTML = createCard(movie);
     cardContainerRef.innerHTML += movieCardHTML;
   });
+  setTimeout(() => {
+    addMovieClickListeners();
+  }, 0);
 }
 
 export function updateFavoriteButtons() {
