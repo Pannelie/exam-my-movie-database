@@ -1,8 +1,8 @@
 //skapande av varje film-kort, stor och liten variant?
 // innerhtml frånm variabel
 
-import { getFavorites } from "/template/scripts/utils/storage.js";
-import { addMovieClickListeners, updateHeartIcon } from "../utils/events.js";
+import { addMovieClickListeners } from "../utils/events.js";
+// import { updateFavoriteButtons } from "../utils/storage.js";
 
 export function renderMovies(movies, container) {
   if (!container) {
@@ -16,30 +16,26 @@ export function renderMovies(movies, container) {
   setTimeout(() => {
     addMovieClickListeners();
   }, 0);
-  document.querySelectorAll(".fav-btn").forEach((heartIcon) => {
-    const movieId = heartIcon
-      .closest(".movieCard__article")
-      .getAttribute("data-id");
-    updateHeartIcon(heartIcon, movieId);
-  });
 }
 
 export function createCard(movie) {
   return `
-  <article class="movieCard__article" data-id="${movie.imdbID}">
-  <button class="fav-btn"><i class="fa-regular fa-heart heart-symbol"></i></button>
-    <img src="${movie.Poster}" alt="${movie.Title}" class="movieCard__img">
+  <article class="movieCard__article">
+  <button class="fav-btn" data-id="${movie.imdbID}"><i class="fa-regular fa-heart heart-symbol"></i></button>
+    <img src="${movie.Poster}" alt="${movie.Title}" class="movieCard__img movieCard__img--zoom">
     <p class="movieCard__title movieCard__title--small">${movie.Title}</p>
   </article>`;
 }
 
 export function fullSingleMovie(movieData) {
   return `
-        <section class="movieCard__img-container">
+        <article class="movieCard__article">
         <img src="${movieData.Poster}" alt="${movieData.Title} poster" 
             class="movieCard__img movieCard__img--grid" />
-            <button class="fav-btn"><i class="fa-regular fa-heart heart-symbol"></i></button>
-        </section>
+            <button class="fav-btn" data-id="${
+              movieData.imdbID
+            }"><i class="fa-regular fa-heart heart-symbol"></i></button>
+        </article>
         <section class="movieCard__text-content">
             <h2 class="movieCard__title movieCard__title--big">${
               movieData.Title

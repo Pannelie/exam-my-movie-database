@@ -123,12 +123,13 @@ body {
   width: auto;
   object-fit: cover;
   border-radius: 0.6rem;
+}
+
+.movieCard__img--zoom {
   transition: all 0.3s ease-in-out;
 }
-/* Zooma in BARA bilden vid hover */
-.movieCard__article:hover .movieCard__img {
+.movieCard__article:hover .movieCard__img--zoom {
   height: 550px; /* Max höjd vid hover */
-  /* max-width: 550px; Max bredd vid hover */
 }
 
 .movieCard__img-container {
@@ -192,6 +193,8 @@ body {
   font-size: 1.2rem;
 }
 .fav-btn {
+  background-color: black;
+  border-radius: 10px;
   position: absolute;
   border-radius: 10px;
   top: 5px;
@@ -200,13 +203,12 @@ body {
   cursor: pointer;
   background-color: #000000;
 }
-.heart-symbol:hover {
+.fav-btn:hover {
   background-color: var(--text-yellow);
 }
+
 .heart-symbol {
-  background-color: black;
   padding: 0.5rem;
-  border-radius: 10px;
   color: var(--primary-white);
   font-size: 2rem;
 }
