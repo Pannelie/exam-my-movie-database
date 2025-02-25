@@ -6,6 +6,7 @@ import {
   cardContainerRef,
   autocompleteListRef,
   movieCardArticleRef,
+  movieInformationRef,
 } from "./domUtils.js";
 import { fullSingleMovie, createCard } from "../components/movieCard.js";
 //sortera film efter betyg, top 20
@@ -53,9 +54,17 @@ export async function setUpSearchForm() {
   });
   formRef.addEventListener(`submit`, async (event) => {
     event.preventDefault();
+
     const movieInput = searchInput.value.trim();
     const movies = await fetchSearchOmdb(movieInput);
-    showSearchResults(movies);
+
+    if (movies.length === 1) {
+      window.location.href = `movie.html?id=${encodeURIComponent(
+        movies[0].imdbID
+      )}`;
+    } else {
+      window.location.href = `search.html?s=${encodeURIComponent(movieInput)}`;
+    }
   });
 }
 
@@ -110,25 +119,25 @@ function clearAutoCompleteList() {
   autocompleteListRef.classList.add(`d-none`); // Dölj listan när vi rensar den
 }
 
-function showSearchResults(movies) {
-  if (movies.length === 1) {
-    window.location.href = `movie.html?query=${encodeURIComponent(
-      movies[0].Title
-    )}`;
+export function showSearchResults(movies) {
+  const queryParams = new URLSearchParams(window.location.search);
+  const query = queryParams.get(`s`) || queryParams.get(`query`);
+  console.log(movies);
+
+  if (window.location.pathname.includes("movie.html") && movies.length === 1) {
     const movie = movies[0];
-    cardContainerRef.innerHTML = fullSingleMovie(movie);
-  } else if (movies.length === 0) {
-    window.location.href = `search.html?query=${encodeURIComponent(
-      searchInput.value.trim()
-    )}`;
-  } else {
+    movieInformationRef.innerHTML = fullSingleMovie(movie);
+  } else if (window.location.pathname.includes("search.html")) {
     cardContainerRef.innerHTML = ``;
-    movies.forEach((movie) => {
-      window.location.href = `search.html?query=${encodeURIComponent(movies)}`;
-      cardContainerRef.innerHTML += createCard(movie);
-    });
-    setTimeout(() => {
-      addMovieClickListeners();
-    }, 0);
+    if (movies.length === 0) {
+      cardContainerRef.innerHTML = `<p>No results found for "${query}".</p>`;
+    } else {
+      movies.forEach((movie) => {
+        cardContainerRef.innerHTML += createCard(movie);
+      });
+      setTimeout(() => {
+        addMovieClickListeners();
+      }, 0);
+    }
   }
 }
