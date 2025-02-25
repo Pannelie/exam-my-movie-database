@@ -232,14 +232,14 @@ body {
   top: calc(
     100% + 5px
   ); /* Gör att listan hamnar precis under inputfältet med 5px marginal */
-  left: 0;
-  width: 100%; /* Ser till att listan blir lika bred som inputfältet */
+
+  width: 50%; /* Ser till att listan blir lika bred som inputfältet */
   background-color: white;
   border: 1px solid #ccc; /* Ger en lätt ram för bättre synlighet */
   border-radius: 0 0 10px 10px; /* Rundade hörn nedåt */
   list-style-type: none; /* Tar bort standardpunkterna från listan */
-  padding: 0;
-  margin: 0;
+  /* padding: 0;
+  margin: 0; */
   max-height: 300px; /* Begränsar höjden så listan inte blir för lång */
   overflow-y: auto; /* Gör att listan scrollar om den blir för lång */
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Lägger till en skugga för bättre synlighet */

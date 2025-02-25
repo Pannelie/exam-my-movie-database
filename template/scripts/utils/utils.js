@@ -32,6 +32,7 @@ export function renderRandomTrailers(movies) {
 
 export async function setUpSearchForm() {
   searchInput.addEventListener(`input`, async (event) => {
+    autocompleteListRef.classList.remove(`d-none`);
     const movieInput = event.target.value;
     const movies = await fetchSearchOmdb(movieInput);
     console.log(searchInput);
@@ -41,6 +42,7 @@ export async function setUpSearchForm() {
 }
 
 export function updateAutoCompleteList(input, movies) {
+  clearAutoCompleteList();
   const matchingMovies = movies.filter((m) => m.Title.includes(input));
   console.log(matchingMovies);
 
@@ -59,4 +61,8 @@ export function updateAutoCompleteList(input, movies) {
 
 function firstCaseToUpper(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function clearAutoCompleteList() {
+  autocompleteListRef.innerHTML = ""; // Tar bort alla listobjekt
 }
