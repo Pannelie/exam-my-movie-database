@@ -9,6 +9,7 @@ import {
   movieInformationRef,
 } from "./domUtils.js";
 import { fullSingleMovie, createCard } from "../components/movieCard.js";
+import { addMovieClickListeners } from "./events.js";
 //sortera film efter betyg, top 20
 
 // Stor bokstav i början

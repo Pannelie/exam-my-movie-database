@@ -31,3 +31,5 @@ export const autocompleteListRef = document.querySelector(`#autocompleteList`);
 
 export const movieCardArticleRef =
   document.querySelector(`.movieCard__article`);
+
+export const movieCardImgRef = document.querySelector(`#movieCard__img`);
