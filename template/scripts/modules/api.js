@@ -18,9 +18,7 @@ export async function fetchSearchOmdb(searchString) {
 
   try {
     const response = await fetch(
-      `http://www.omdbapi.com/?apikey=${apiKey}&s=${encodeURIComponent(
-        searchString
-      )}`
+      `http://www.omdbapi.com/?apikey=${apiKey}&s=${searchString}*`
     );
 
     if (!response.ok) {

@@ -57,9 +57,15 @@ export function updateAutoCompleteList(input, movies) {
   if (!movies || movies.length === 0) return; //om movies inte existerar eller är lika med noll så avbryts koden
 
   const inputLower = input.toLowerCase();
-  const matchingMovies = movies.filter((m) =>
-    m.Title.toLowerCase().includes(inputLower)
-  );
+  const matchingMovies = movies
+    .filter((m) => m.Title.toLowerCase().startsWith(inputLower)) // Filmer som börjar med sökordet
+    .concat(
+      movies.filter(
+        (m) =>
+          m.Title.toLowerCase().includes(inputLower) && // Filmer som innehåller sökordet någonstans
+          !m.Title.toLowerCase().startsWith(inputLower)
+      )
+    );
 
   console.log(matchingMovies);
 
