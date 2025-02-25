@@ -49,6 +49,12 @@ export async function setUpSearchForm() {
       clearAutoCompleteList();
     }
   });
+  formRef.addEventListener(`submit`, async (event) => {
+    event.preventDefault();
+    const movieInput = searchInput.value.trim();
+    const movies = await fetchSearchOmdb(movieInput);
+    showSearchResults(movies);
+  });
 }
 
 export function updateAutoCompleteList(input, movies) {
@@ -100,4 +106,11 @@ function firstCaseToUpper(str) {
 function clearAutoCompleteList() {
   autocompleteListRef.innerHTML = "";
   autocompleteListRef.classList.add(`d-none`); // Dölj listan när vi rensar den
+}
+
+function showSearchResults(movies) {
+  cardContainerRef.innerHTML = ``;
+
+  if (movies.length === 1) {
+  }
 }
