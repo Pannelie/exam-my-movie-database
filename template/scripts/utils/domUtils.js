@@ -28,3 +28,6 @@ export const searchBtn = document.querySelector(`#searchBtn`);
 export const formRef = document.querySelector(`#searchForm`);
 
 export const autocompleteListRef = document.querySelector(`#autocompleteList`);
+
+export const movieCardArticleRef =
+  document.querySelector(`.movieCard__article`);

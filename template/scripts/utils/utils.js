@@ -5,7 +5,9 @@ import {
   formRef,
   cardContainerRef,
   autocompleteListRef,
+  movieCardArticleRef,
 } from "./domUtils.js";
+import { fullSingleMovie, createCard } from "../components/movieCard.js";
 //sortera film efter betyg, top 20
 
 // Stor bokstav i början
@@ -109,8 +111,24 @@ function clearAutoCompleteList() {
 }
 
 function showSearchResults(movies) {
-  cardContainerRef.innerHTML = ``;
-
   if (movies.length === 1) {
+    window.location.href = `movie.html?query=${encodeURIComponent(
+      movies[0].Title
+    )}`;
+    const movie = movies[0];
+    cardContainerRef.innerHTML = fullSingleMovie(movie);
+  } else if (movies.length === 0) {
+    window.location.href = `search.html?query=${encodeURIComponent(
+      searchInput.value.trim()
+    )}`;
+  } else {
+    cardContainerRef.innerHTML = ``;
+    movies.forEach((movie) => {
+      window.location.href = `search.html?query=${encodeURIComponent(movies)}`;
+      cardContainerRef.innerHTML += createCard(movie);
+    });
+    setTimeout(() => {
+      addMovieClickListeners();
+    }, 0);
   }
 }
