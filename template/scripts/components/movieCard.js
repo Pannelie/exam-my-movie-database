@@ -2,6 +2,7 @@
 // innerhtml frånm variabel
 
 import { addMovieClickListeners } from "../utils/events.js";
+import { movieCardImgRef } from "../utils/domUtils.js";
 // import { updateFavoriteButtons } from "../utils/storage.js";
 
 export function renderMovies(movies, container) {
@@ -18,19 +19,28 @@ export function renderMovies(movies, container) {
   }, 0);
 }
 
-export function createCard(movie) {
+export function createCard(movieData) {
+  const poster =
+    movieData.Poster && movieData.Poster !== "N/A"
+      ? movieData.Poster
+      : "/template/res/icons/missing-poster.svg";
+
   return `
   <article class="movieCard__article">
-  <button class="fav-btn" data-id="${movie.imdbID}"><i class="fa-regular fa-heart heart-symbol"></i></button>
-    <img src="${movie.Poster}" alt="${movie.Title}" class="movieCard__img movieCard__img--zoom">
-    <p class="movieCard__title movieCard__title--small">${movie.Title}</p>
+  <button class="fav-btn" data-id="${movieData.imdbID}"><i class="fa-regular fa-heart heart-symbol"></i></button>
+    <img src="${poster}" alt="${movieData.Title}" class="movieCard__img movieCard__img--zoom">
+    <p class="movieCard__title movieCard__title--small">${movieData.Title}</p>
   </article>`;
 }
 
 export function fullSingleMovie(movieData) {
+  const poster =
+    movieData.Poster && movieData.Poster !== "N/A"
+      ? movieData.Poster
+      : "/template/res/icons/missing-poster.svg";
   return `
         <article class="movieCard__article">
-        <img src="${movieData.Poster}" alt="${movieData.Title} poster" 
+        <img src="${poster}" alt="${movieData.Title} poster" 
             class="movieCard__img movieCard__img--grid" />
             <button class="fav-btn" data-id="${
               movieData.imdbID

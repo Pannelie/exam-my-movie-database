@@ -60,6 +60,7 @@ body {
   width: 100%;
   display: flex;
   justify-content: center;
+  position: relative;
 }
 
 .header__input {
@@ -83,6 +84,12 @@ body {
   background: none;
   border: none;
   cursor: pointer;
+}
+
+.popular-title {
+  color: var(--primary-white);
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
 
 /*------ moviecards style --------*/
@@ -192,6 +199,8 @@ body {
   margin-top: 1rem;
   font-size: 1.2rem;
 }
+/*---------fav-btn icon-------------*/
+
 .fav-btn {
   background-color: black;
   border-radius: 10px;
@@ -211,6 +220,43 @@ body {
   padding: 0.5rem;
   color: var(--primary-white);
   font-size: 2rem;
+}
+
+/* --------------search-------*/
+
+.search__autocomplete-list {
+  position: absolute;
+  top: calc(
+    100% + 5px
+  ); /* Gör att listan hamnar precis under inputfältet med 5px marginal */
+
+  width: 50%; /* Ser till att listan blir lika bred som inputfältet */
+  background-color: white;
+  border: 1px solid #ccc; /* Ger en lätt ram för bättre synlighet */
+  border-radius: 0 0 10px 10px; /* Rundade hörn nedåt */
+  list-style-type: none; /* Tar bort standardpunkterna från listan */
+
+  overflow-y: auto; /* Gör att listan scrollar om den blir för lång */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Lägger till en skugga för bättre synlighet */
+  z-index: 1000; /* Håller listan ovanför andra element */
+}
+
+/* Styla varje list-item snyggt */
+.search__list-item {
+  padding: 10px;
+  cursor: pointer;
+  font-family: var(--main-font-family);
+  font-size: 1rem;
+  color: black;
+}
+.search__list-item:nth-child(odd) {
+  background-color: #f0e5c0;
+}
+
+/* Highlighta när man hovrar över ett list-item */
+.search__list-item:hover {
+  background-color: #f5c518;
+  color: white;
 }
 
 @media screen and (max-width: 810px) {

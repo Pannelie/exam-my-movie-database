@@ -1,14 +1,24 @@
-import { fetchTrailers, fetchMovies, fetchFullOmdb } from "./modules/api.js";
+import { fetchMovies, fetchFullOmdb, fetchSearchOmdb } from "./modules/api.js";
 import { renderMovies, fullSingleMovie } from "./components/movieCard.js";
 import { cardContainerRef, movieInformationRef } from "./utils/domUtils.js";
 import { showFavorites, updateFavoriteButtons } from "./utils/storage.js";
+import {
+  renderRandomTrailers,
+  setUpSearchForm,
+  showSearchResults,
+} from "./utils/utils.js";
 
 async function handlePageLoad() {
   const urlParams = new URLSearchParams(window.location.search);
   const movieId = urlParams.get("id");
+  const searchQuery = urlParams.get("s") || urlParams.get("query");
   const path = window.location.pathname;
+  console.log(searchQuery);
+
+  const movies = await fetchMovies();
 
   updateFavoriteButtons();
+  setUpSearchForm();
 
   if (
     path === "/template/" ||
@@ -18,11 +28,13 @@ async function handlePageLoad() {
     console.log("index.html");
 
     try {
-      fetchTrailers();
-      const movies = await fetchMovies();
+      // fetchTrailers();
+
       if (movies.length > 0) {
+        renderRandomTrailers(movies);
         renderMovies(movies, cardContainerRef);
         updateFavoriteButtons();
+        setUpSearchForm(movies);
       } else {
         console.error("Inga filmer att visa.");
       }
@@ -33,8 +45,10 @@ async function handlePageLoad() {
     console.log("favorites.html");
     showFavorites();
     updateFavoriteButtons();
+    setUpSearchForm(movies);
   } else if (path === "/template/movie.html") {
     console.log("movie.html");
+    setUpSearchForm(movies);
     updateFavoriteButtons();
 
     if (!movieId) {
@@ -55,7 +69,19 @@ async function handlePageLoad() {
     }
   } else if (path === "/template/search.html") {
     console.log("search.html");
+
+    if (searchQuery) {
+      try {
+        const movies = await fetchSearchOmdb(searchQuery);
+        console.log(movies);
+
+        showSearchResults(movies);
+      } catch (error) {
+        console.error(`Fel vid hämtning av sökresultat:`, error);
+      }
+    }
     updateFavoriteButtons();
+    setUpSearchForm(movies);
   } else {
     console.warn("Okänd sida:", path);
   }
