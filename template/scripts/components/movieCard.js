@@ -27,7 +27,7 @@ export function createCard(movieData) {
       : "/template/res/icons/missing-poster.svg";
 
   return `
-  <article class="movieCard__article">
+  <article class="movieCard__article movieCard__article--cursor">
   <button class="fav-btn" data-id="${
     movieData.imdbID
   }"><i class="fa-regular fa-heart heart-symbol"></i></button>

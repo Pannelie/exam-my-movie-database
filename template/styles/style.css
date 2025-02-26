@@ -111,8 +111,11 @@ body {
   overflow: hidden; /* Förhindrar att den inzoomade bilden bryter utanför */
   height: 550px;
   max-width: 370px;
-  cursor: pointer;
   border-radius: 0.6rem;
+}
+
+.movieCard__article--cursor {
+  cursor: pointer;
 }
 
 .movie-information {
@@ -216,6 +219,7 @@ body {
   border: none;
   cursor: pointer;
   background-color: #000000;
+  z-index: 10;
 }
 .fav-btn:hover {
   background-color: var(--text-yellow);
