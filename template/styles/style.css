@@ -110,6 +110,7 @@ body {
   position: relative;
   overflow: hidden; /* Förhindrar att den inzoomade bilden bryter utanför */
   height: 550px;
+  max-width: 370px;
   cursor: pointer;
   border-radius: 0.6rem;
 }
@@ -126,17 +127,21 @@ body {
 }
 
 .movieCard__img {
-  height: 500px;
-  width: auto;
+  height: 90%;
+  width: 100%;
   object-fit: cover;
   border-radius: 0.6rem;
+
+  transition: transform 0.5s ease; /* Mjuk övergång */
+  transform-origin: 50% 20%; /* Zooma från mitten */
 }
 
 .movieCard__img--zoom {
   transition: all 0.3s ease-in-out;
 }
 .movieCard__article:hover .movieCard__img--zoom {
-  height: 550px; /* Max höjd vid hover */
+  /* height: 550px; Max höjd vid hover */
+  transform: scale(1.21);
 }
 
 .movieCard__img-container {
