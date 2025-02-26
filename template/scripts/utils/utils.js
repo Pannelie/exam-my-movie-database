@@ -58,15 +58,18 @@ export async function setUpSearchForm() {
     const movieInput = searchInput.value.trim();
     const movies = await fetchSearchOmdb(movieInput);
 
-    if (movies.length === 1) {
+    if (movieInput === ``) {
+      console.log(`inget valt`);
+      searchInput.classList.add("custom-placeholder");
+      searchInput.placeholder = `Please enter text...`;
+    } else if (movies.length === 0) {
+      searchInput.placeholder = `No match...`;
+      searchInput.style.color = "red"; // Sätt textfärgen till röd
+      searchInput.value = ""; // Rensa inputfältet
+    } else if (movies.length === 1) {
       window.location.href = `movie.html?id=${encodeURIComponent(
         movies[0].imdbID
       )}`;
-    } else if (movies.length === 0) {
-      console.log(`no match`);
-      searchInput.value = ``;
-      searchInput.classList.add("custom-placeholder");
-      searchInput.placeholder = `No match for "${movieInput}"`; // Sätt placeholder vid submit också
     } else {
       window.location.href = `search.html?s=${encodeURIComponent(movieInput)}`;
     }

@@ -69,6 +69,8 @@ body {
   border-radius: 2rem 0 0 2rem;
   border: none;
 }
+
+/* ------ändrar färg på min placeholder som error-msg -----*/
 .custom-placeholder::placeholder {
   color: red;
 }
@@ -288,6 +290,10 @@ body {
     padding-left: 0;
   }
 
+  .movieCard__article--grid {
+    grid-column: 1 / -1;
+  }
+
   .movieCard__img-container {
     grid-column: span 4;
   }
@@ -296,7 +302,7 @@ body {
   } */
 
   .movieCard__text-content {
-    padding: 2rem;
+    padding: 0 2rem 2rem;
   }
 
   .movieCard__title--big {

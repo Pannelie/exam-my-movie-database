@@ -47,7 +47,7 @@ export function fullSingleMovie(movieData) {
       ? movieData.Poster
       : "/template/res/icons/missing-poster.svg";
   return `
-        <article class="movieCard__article">
+        <article class="movieCard__article movieCard__article--grid">
         <img src="${poster}" alt="${movieData.Title} poster" 
             class="movieCard__img movieCard__img--grid" />
             <button class="fav-btn" data-id="${
