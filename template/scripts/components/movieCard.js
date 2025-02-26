@@ -60,17 +60,25 @@ export function fullSingleMovie(movieData) {
             }</h2>
             <section class="movieCard__flex-container">
                 <p class="movieCard__text movieCard__text--short">${
-                  movieData.Genre
+                  movieData.Genre && movieData.Genre !== `N/A`
+                    ? movieData.Genre
+                    : ``
                 }</p>
                 <p class="movieCard__text movieCard__text--short">${
-                  movieData.Year
+                  movieData.Year && movieData.Year !== `N/A`
+                    ? movieData.Year
+                    : ``
                 }</p>
                 <p class="movieCard__text movieCard__text--short">${
-                  movieData.Runtime
+                  movieData.Runtime && movieData.Runtime !== `N/A`
+                    ? movieData.Runtime
+                    : ``
                 }</p>
             </section>
             <p class="movieCard__text movieCard__text--plot">${
-              movieData.Plot || `Hittade ingen beskrivning`
+              movieData.Plot && movieData.Plot !== `N/A`
+                ? movieData.Plot
+                : `Plot not provided`
             }
             </p>
             ${

@@ -70,11 +70,6 @@ body {
   border: none;
 }
 
-/* ------ändrar färg på min placeholder som error-msg -----*/
-.custom-placeholder::placeholder {
-  color: red;
-}
-
 .header__form-btn {
   border-radius: 0 2rem 2rem 0;
   width: 5rem;
@@ -93,8 +88,8 @@ body {
 
 .popular-title {
   color: var(--primary-white);
-  text-align: center;
-  margin-bottom: 1.5rem;
+  text-align: right;
+  margin: 1rem 0 2.5rem;
 }
 
 /*------ moviecards style --------*/
@@ -105,6 +100,7 @@ body {
   grid-template-rows: 550px;
   gap: 1rem;
   justify-items: center;
+  margin-bottom: 4rem;
 }
 
 .movieCard__link {

@@ -1,18 +1,4 @@
-import { movieInformationRef, createElement, appChild } from "./domUtils.js";
-import { fetchFullOmdb } from "../modules/api.js";
 import { saveFavorite } from "./storage.js";
-import { fullSingleMovie } from "../components/movieCard.js";
-
-export async function addsingleFavListener() {
-  const movieArticles = document.querySelectorAll(".movieCard__article");
-
-  for (const article of movieArticles) {
-    const button = article.querySelector(`.fav-btn`);
-    const movieId = button.getAttribute(`data-id`);
-    const heartSymbol = article.querySelector(`.fav-btn .heart-symbol`);
-    console.log(`mitt hjärtelement`, heartSymbol);
-  }
-}
 
 export async function addMovieClickListeners() {
   const movieArticles = document.querySelectorAll(".movieCard__article");

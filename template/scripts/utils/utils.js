@@ -5,7 +5,6 @@ import {
   formRef,
   cardContainerRef,
   autocompleteListRef,
-  movieCardArticleRef,
   movieInformationRef,
 } from "./domUtils.js";
 import { fullSingleMovie, createCard } from "../components/movieCard.js";
@@ -64,7 +63,6 @@ export async function setUpSearchForm() {
       searchInput.placeholder = `Please enter text...`;
     } else if (movies.length === 0) {
       searchInput.placeholder = `No match...`;
-      searchInput.style.color = "red"; // Sätt textfärgen till röd
       searchInput.value = ""; // Rensa inputfältet
     } else if (movies.length === 1) {
       window.location.href = `movie.html?id=${encodeURIComponent(
