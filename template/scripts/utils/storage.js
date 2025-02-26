@@ -1,6 +1,6 @@
 import { cardContainerRef } from "./domUtils.js";
 import { createCard } from "../components/movieCard.js";
-import { addsingleFavListener, addMovieClickListeners } from "./events.js";
+import { addMovieClickListeners } from "./events.js";
 import { fetchFullOmdb } from "../modules/api.js";
 
 //plats för att lagra mina favoriter

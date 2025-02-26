@@ -13,7 +13,7 @@ async function handlePageLoad() {
   const movieId = urlParams.get("id");
   const searchQuery = urlParams.get("s") || urlParams.get("query");
   const path = window.location.pathname;
-  console.log(searchQuery);
+  console.log(`if search:`, searchQuery);
 
   const movies = await fetchMovies();
 

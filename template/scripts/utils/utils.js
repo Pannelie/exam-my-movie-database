@@ -5,14 +5,11 @@ import {
   formRef,
   cardContainerRef,
   autocompleteListRef,
-  movieCardArticleRef,
   movieInformationRef,
 } from "./domUtils.js";
 import { fullSingleMovie, createCard } from "../components/movieCard.js";
 import { addMovieClickListeners } from "./events.js";
 //sortera film efter betyg, top 20
-
-// Stor bokstav i början
 
 //konvertera minuter till timmar+ minuter i filmtid
 
@@ -50,6 +47,7 @@ export async function setUpSearchForm() {
       !searchInput.contains(event.target) &&
       !autocompleteListRef.contains(event.target)
     ) {
+      searchInput.placeholder = "";
       clearAutoCompleteList();
     }
   });
@@ -59,7 +57,14 @@ export async function setUpSearchForm() {
     const movieInput = searchInput.value.trim();
     const movies = await fetchSearchOmdb(movieInput);
 
-    if (movies.length === 1) {
+    if (movieInput === ``) {
+      console.log(`inget valt`);
+      searchInput.classList.add("custom-placeholder");
+      searchInput.placeholder = `Please enter text...`;
+    } else if (movies.length === 0) {
+      searchInput.placeholder = `No match...`;
+      searchInput.value = ""; // Rensa inputfältet
+    } else if (movies.length === 1) {
       window.location.href = `movie.html?id=${encodeURIComponent(
         movies[0].imdbID
       )}`;
@@ -72,7 +77,9 @@ export async function setUpSearchForm() {
 export function updateAutoCompleteList(input, movies) {
   clearAutoCompleteList(); //rensar listan först
 
-  if (!movies || movies.length === 0) return; //om movies inte existerar eller är lika med noll så avbryts koden
+  if (!movies || movies.length === 0) {
+    return; // Avbryt om inga filmer hittades
+  }
 
   const inputLower = input.toLowerCase();
   const matchingMovies = movies
@@ -88,7 +95,7 @@ export function updateAutoCompleteList(input, movies) {
   console.log(matchingMovies);
 
   if (matchingMovies.length === 0) {
-    autocompleteListRef.classList.add(`d-none`);
+    return; // Avbryt om inga filmer matchar
   } else {
     autocompleteListRef.classList.remove(`d-none`);
   }
@@ -141,4 +148,14 @@ export function showSearchResults(movies) {
       }, 0);
     }
   }
+}
+
+//förhindrar att texten avslutas mitt i, utan indikerar på att titeln egentligen är längre än vad som får plats
+export function truncateText(text, maxLength) {
+  if (text.length <= maxLength) return text;
+  return text.substring(0, text.lastIndexOf(" ", maxLength)) + "...";
+}
+
+export function dataExist(data, param) {
+  return data && data !== `N/A` ? data : param;
 }

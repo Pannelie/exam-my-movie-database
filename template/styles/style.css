@@ -88,8 +88,8 @@ body {
 
 .popular-title {
   color: var(--primary-white);
-  text-align: center;
-  margin-bottom: 1.5rem;
+  text-align: right;
+  margin: 1rem 0 2.5rem;
 }
 
 /*------ moviecards style --------*/
@@ -100,6 +100,7 @@ body {
   grid-template-rows: 550px;
   gap: 1rem;
   justify-items: center;
+  margin-bottom: 4rem;
 }
 
 .movieCard__link {
@@ -110,8 +111,12 @@ body {
   position: relative;
   overflow: hidden; /* Förhindrar att den inzoomade bilden bryter utanför */
   height: 550px;
-  cursor: pointer;
+  max-width: 370px;
   border-radius: 0.6rem;
+}
+
+.movieCard__article--cursor {
+  cursor: pointer;
 }
 
 .movie-information {
@@ -126,17 +131,21 @@ body {
 }
 
 .movieCard__img {
-  height: 500px;
-  width: auto;
+  height: 90%;
+  width: 100%;
   object-fit: cover;
   border-radius: 0.6rem;
+
+  transition: transform 0.5s ease; /* Mjuk övergång */
+  transform-origin: 50% 20%; /* Zooma från mitten */
 }
 
 .movieCard__img--zoom {
   transition: all 0.3s ease-in-out;
 }
 .movieCard__article:hover .movieCard__img--zoom {
-  height: 550px; /* Max höjd vid hover */
+  /* height: 550px; Max höjd vid hover */
+  transform: scale(1.21);
 }
 
 .movieCard__img-container {
@@ -211,6 +220,7 @@ body {
   border: none;
   cursor: pointer;
   background-color: #000000;
+  z-index: 10;
 }
 .fav-btn:hover {
   background-color: var(--text-yellow);
@@ -276,6 +286,10 @@ body {
     padding-left: 0;
   }
 
+  .movieCard__article--grid {
+    grid-column: 1 / -1;
+  }
+
   .movieCard__img-container {
     grid-column: span 4;
   }
@@ -284,7 +298,7 @@ body {
   } */
 
   .movieCard__text-content {
-    padding: 2rem;
+    padding: 0 2rem 2rem;
   }
 
   .movieCard__title--big {
