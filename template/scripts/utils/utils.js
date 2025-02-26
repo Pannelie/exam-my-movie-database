@@ -12,8 +12,6 @@ import { fullSingleMovie, createCard } from "../components/movieCard.js";
 import { addMovieClickListeners } from "./events.js";
 //sortera film efter betyg, top 20
 
-// Stor bokstav i början
-
 //konvertera minuter till timmar+ minuter i filmtid
 
 export function renderRandomTrailers(movies) {
@@ -141,4 +139,10 @@ export function showSearchResults(movies) {
       }, 0);
     }
   }
+}
+
+//förhindrar att texten avslutas mitt i, utan indikerar på att titeln egentligen är längre än vad som får plats
+export function truncateText(text, maxLength) {
+  if (text.length <= maxLength) return text;
+  return text.substring(0, text.lastIndexOf(" ", maxLength)) + "...";
 }

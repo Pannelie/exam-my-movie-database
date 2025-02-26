@@ -3,6 +3,7 @@
 
 import { addMovieClickListeners } from "../utils/events.js";
 import { movieCardImgRef } from "../utils/domUtils.js";
+import { truncateText } from "../utils/utils.js";
 // import { updateFavoriteButtons } from "../utils/storage.js";
 
 export function renderMovies(movies, container) {
@@ -27,9 +28,16 @@ export function createCard(movieData) {
 
   return `
   <article class="movieCard__article">
-  <button class="fav-btn" data-id="${movieData.imdbID}"><i class="fa-regular fa-heart heart-symbol"></i></button>
-    <img src="${poster}" alt="${movieData.Title}" class="movieCard__img movieCard__img--zoom">
-    <p class="movieCard__title movieCard__title--small">${movieData.Title}</p>
+  <button class="fav-btn" data-id="${
+    movieData.imdbID
+  }"><i class="fa-regular fa-heart heart-symbol"></i></button>
+    <img src="${poster}" alt="${
+    movieData.Title
+  }" class="movieCard__img movieCard__img--zoom">
+    <p class="movieCard__title movieCard__title--small">${truncateText(
+      movieData.Title,
+      70
+    )}</p>
   </article>`;
 }
 
