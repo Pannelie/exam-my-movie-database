@@ -155,3 +155,7 @@ export function truncateText(text, maxLength) {
   if (text.length <= maxLength) return text;
   return text.substring(0, text.lastIndexOf(" ", maxLength)) + "...";
 }
+
+export function dataExist(data, param) {
+  return data && data !== `N/A` ? data : param;
+}

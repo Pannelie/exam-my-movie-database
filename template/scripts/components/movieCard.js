@@ -3,7 +3,7 @@
 
 import { addMovieClickListeners } from "../utils/events.js";
 import { movieCardImgRef } from "../utils/domUtils.js";
-import { truncateText } from "../utils/utils.js";
+import { truncateText, dataExist } from "../utils/utils.js";
 // import { updateFavoriteButtons } from "../utils/storage.js";
 
 export function renderMovies(movies, container) {
@@ -21,17 +21,14 @@ export function renderMovies(movies, container) {
 }
 
 export function createCard(movieData) {
-  const poster =
-    movieData.Poster && movieData.Poster !== "N/A"
-      ? movieData.Poster
-      : "/template/res/icons/missing-poster.svg";
+  const imgSrc = "/template/res/icons/missing-poster.svg";
 
   return `
   <article class="movieCard__article movieCard__article--cursor">
   <button class="fav-btn" data-id="${
     movieData.imdbID
   }"><i class="fa-regular fa-heart heart-symbol"></i></button>
-    <img src="${poster}" alt="${
+    <img src="${dataExist(movieData.Poster, imgSrc)}" alt="${
     movieData.Title
   }" class="movieCard__img movieCard__img--zoom">
     <p class="movieCard__title movieCard__title--small">${truncateText(
@@ -42,13 +39,15 @@ export function createCard(movieData) {
 }
 
 export function fullSingleMovie(movieData) {
-  const poster =
-    movieData.Poster && movieData.Poster !== "N/A"
-      ? movieData.Poster
-      : "/template/res/icons/missing-poster.svg";
+  const imgSrc = "/template/res/icons/missing-poster.svg";
+  const emptyString = ``;
+  const notAvailable = `Not provided`;
+
   return `
         <article class="movieCard__article movieCard__article--grid">
-        <img src="${poster}" alt="${movieData.Title} poster" 
+        <img src="${dataExist(movieData.Poster, imgSrc)}" alt="${
+    movieData.Title
+  } poster" 
             class="movieCard__img movieCard__img--grid" />
             <button class="fav-btn" data-id="${
               movieData.imdbID
@@ -59,40 +58,37 @@ export function fullSingleMovie(movieData) {
               movieData.Title
             }</h2>
             <section class="movieCard__flex-container">
-                <p class="movieCard__text movieCard__text--short">${
-                  movieData.Genre && movieData.Genre !== `N/A`
-                    ? movieData.Genre
-                    : ``
-                }</p>
-                <p class="movieCard__text movieCard__text--short">${
-                  movieData.Year && movieData.Year !== `N/A`
-                    ? movieData.Year
-                    : ``
-                }</p>
-                <p class="movieCard__text movieCard__text--short">${
-                  movieData.Runtime && movieData.Runtime !== `N/A`
-                    ? movieData.Runtime
-                    : ``
-                }</p>
+                <p class="movieCard__text movieCard__text--short">${dataExist(
+                  movieData.Genre,
+                  emptyString
+                )}</p>
+                <p class="movieCard__text movieCard__text--short">${dataExist(
+                  movieData.Year,
+                  emptyString
+                )}</p>
+                <p class="movieCard__text movieCard__text--short">${dataExist(
+                  movieData.Runtime,
+                  emptyString
+                )}</p>
             </section>
-            <p class="movieCard__text movieCard__text--plot">${
-              movieData.Plot && movieData.Plot !== `N/A`
-                ? movieData.Plot
-                : `Plot not provided`
-            }
+            <p class="movieCard__text movieCard__text--plot"><strong>Plot: </strong>${dataExist(
+              movieData.Plot,
+              notAvailable
+            )}
             </p>
-            ${
-              movieData.Director && movieData.Director !== "N/A"
-                ? `<p class="movieCard__text movieCard__text--long"><strong>Director:</strong> ${movieData.Director}</p>`
-                : ""
-            }
-        <p class="movieCard__text movieCard__text--long"><strong>Actors:</strong> ${
-          movieData.Actors
-        }</p>
-        ${
-          movieData.Awards && movieData.Awards !== "N/A"
-            ? `<p class="movieCard__text movieCard__text--long movieCard__text--award">${movieData.Awards}</p>`
-            : ""
-        }</section>
+           <p class="movieCard__text movieCard__text--long"><strong>Director:</strong> ${dataExist(
+             movieData.Director,
+             notAvailable
+           )}</p>
+          
+        <p class="movieCard__text movieCard__text--long"><strong>Actors:</strong> ${dataExist(
+          movieData.Actors,
+          notAvailable
+        )}</p>
+        <p class="movieCard__text movieCard__text--long movieCard__text--award">${dataExist(
+          movieData.Awards,
+          emptyString
+        )}</p>
+           </section>
           `;
 }
