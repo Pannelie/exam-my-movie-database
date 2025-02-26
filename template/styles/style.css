@@ -69,6 +69,9 @@ body {
   border-radius: 2rem 0 0 2rem;
   border: none;
 }
+.custom-placeholder::placeholder {
+  color: red;
+}
 
 .header__form-btn {
   border-radius: 0 2rem 2rem 0;

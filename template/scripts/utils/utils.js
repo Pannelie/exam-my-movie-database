@@ -48,6 +48,7 @@ export async function setUpSearchForm() {
       !searchInput.contains(event.target) &&
       !autocompleteListRef.contains(event.target)
     ) {
+      searchInput.placeholder = "";
       clearAutoCompleteList();
     }
   });
@@ -61,6 +62,11 @@ export async function setUpSearchForm() {
       window.location.href = `movie.html?id=${encodeURIComponent(
         movies[0].imdbID
       )}`;
+    } else if (movies.length === 0) {
+      console.log(`no match`);
+      searchInput.value = ``;
+      searchInput.classList.add("custom-placeholder");
+      searchInput.placeholder = `No match for "${movieInput}"`; // Sätt placeholder vid submit också
     } else {
       window.location.href = `search.html?s=${encodeURIComponent(movieInput)}`;
     }
@@ -70,7 +76,9 @@ export async function setUpSearchForm() {
 export function updateAutoCompleteList(input, movies) {
   clearAutoCompleteList(); //rensar listan först
 
-  if (!movies || movies.length === 0) return; //om movies inte existerar eller är lika med noll så avbryts koden
+  if (!movies || movies.length === 0) {
+    return; // Avbryt om inga filmer hittades
+  }
 
   const inputLower = input.toLowerCase();
   const matchingMovies = movies
@@ -86,7 +94,7 @@ export function updateAutoCompleteList(input, movies) {
   console.log(matchingMovies);
 
   if (matchingMovies.length === 0) {
-    autocompleteListRef.classList.add(`d-none`);
+    return; // Avbryt om inga filmer matchar
   } else {
     autocompleteListRef.classList.remove(`d-none`);
   }
