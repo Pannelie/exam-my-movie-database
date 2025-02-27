@@ -4,10 +4,10 @@ import { cardContainerRef, movieInformationRef } from "./utils/domUtils.js";
 import { showFavorites, updateFavoriteButtons } from "./utils/storage.js";
 import {
   renderRandomTrailers,
-  setUpSearchForm,
   showSearchResults,
   renderMovies,
 } from "./utils/utils.js";
+import { setUpSearchForm } from "./utils/events.js";
 
 async function handlePageLoad() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -20,7 +20,7 @@ async function handlePageLoad() {
   console.log(`this is`, movies);
 
   updateFavoriteButtons();
-  setUpSearchForm();
+  // setUpSearchForm();
 
   if (
     path === "/template/" ||

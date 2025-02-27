@@ -44,50 +44,50 @@ export function renderMovies(movies, container) {
     addMovieClickListeners();
   }, 0);
 }
-export async function setUpSearchForm() {
-  searchInput.addEventListener(`input`, async (event) => {
-    // autocompleteListRef.classList.remove(`d-none`);
-    const movieInput = event.target.value.trim(); //tar bort inledande och avslutande whitespace
-    const movies = await fetchSearchOmdb(movieInput);
+// export async function setUpSearchForm() {
+//   searchInput.addEventListener(`input`, async (event) => {
+//     // autocompleteListRef.classList.remove(`d-none`);
+//     const movieInput = event.target.value.trim(); //tar bort inledande och avslutande whitespace
+//     const movies = await fetchSearchOmdb(movieInput);
 
-    console.log(`is this array:`, movies);
-    updateAutoCompleteList(movieInput, movies);
-  });
+//     console.log(`is this array:`, movies);
+//     updateAutoCompleteList(movieInput, movies);
+//   });
 
-  document.addEventListener("click", (event) => {
-    //eventlyssnare för om INTE searchinput eller autocompletelistref innehåller mitt event target, då ska följande ske
-    if (
-      !searchInput.contains(event.target) &&
-      !autocompleteListRef.contains(event.target)
-    ) {
-      searchInput.placeholder = "";
-      clearAutoCompleteList();
-    }
-  });
-  formRef.addEventListener(`submit`, async (event) => {
-    event.preventDefault();
+//   document.addEventListener("click", (event) => {
+//     //eventlyssnare för om INTE searchinput eller autocompletelistref innehåller mitt event target, då ska följande ske
+//     if (
+//       !searchInput.contains(event.target) &&
+//       !autocompleteListRef.contains(event.target)
+//     ) {
+//       searchInput.placeholder = "";
+//       clearAutoCompleteList();
+//     }
+//   });
+//   formRef.addEventListener(`submit`, async (event) => {
+//     event.preventDefault();
 
-    const movieInput = searchInput.value.trim();
-    const movies = await fetchSearchOmdb(movieInput);
+//     const movieInput = searchInput.value.trim();
+//     const movies = await fetchSearchOmdb(movieInput);
 
-    if (movieInput === ``) {
-      console.log(`inget valt`);
-      searchInput.classList.add("custom-placeholder");
-      searchInput.placeholder = `Please enter text...`;
-    } else if (movies.length === 0) {
-      searchInput.placeholder = `No match...`;
-      searchInput.value = ""; // Rensa inputfältet
-    } else if (movies.length === 1) {
-      window.location.href = `movie.html?id=${encodeURIComponent(
-        movies[0].imdbID
-      )}`;
-    } else {
-      window.location.href = `search.html?s=${encodeURIComponent(movieInput)}`;
-    }
-  });
-}
+//     if (movieInput === ``) {
+//       console.log(`inget valt`);
+//       searchInput.classList.add("custom-placeholder");
+//       searchInput.placeholder = `Please enter text...`;
+//     } else if (movies.length === 0) {
+//       searchInput.placeholder = `No match...`;
+//       searchInput.value = ""; // Rensa inputfältet
+//     } else if (movies.length === 1) {
+//       window.location.href = `movie.html?id=${encodeURIComponent(
+//         movies[0].imdbID
+//       )}`;
+//     } else {
+//       window.location.href = `search.html?s=${encodeURIComponent(movieInput)}`;
+//     }
+//   });
+// }
 
-function updateAutoCompleteList(input, movies) {
+export function updateAutoCompleteList(input, movies) {
   clearAutoCompleteList(); //rensar listan först
 
   if (!movies || movies.length === 0) {
@@ -135,7 +135,7 @@ function firstCaseToUpper(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-function clearAutoCompleteList() {
+export function clearAutoCompleteList() {
   autocompleteListRef.innerHTML = "";
   autocompleteListRef.classList.add(`d-none`); // Dölj listan när vi rensar den
 }
