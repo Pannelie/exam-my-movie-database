@@ -44,7 +44,7 @@ export async function saveFavorite(event) {
   updateFavoriteButtons();
 }
 
-export function showFavorites() {
+export function renderFavorites() {
   const favorites = getFavorites();
   const sortedFavorites = sortByAlphabet(favorites);
 
@@ -57,7 +57,7 @@ export function showFavorites() {
   setTimeout(() => {
     addMovieClickListeners();
   }, 0);
-  console.log(`hit kom jag i showFavorites`);
+  console.log(`hit kom jag i renderFavorites`);
 }
 
 export function updateFavoriteButtons() {

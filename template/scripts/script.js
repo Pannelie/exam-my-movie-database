@@ -1,10 +1,10 @@
 import { fetchMovies, fetchFullOmdb, fetchSearchOmdb } from "./modules/api.js";
 import { fullSingleMovie } from "./components/movieCard.js";
 import { cardContainerRef, movieInformationRef } from "./utils/domUtils.js";
-import { showFavorites, updateFavoriteButtons } from "./utils/storage.js";
+import { renderFavorites, updateFavoriteButtons } from "./utils/storage.js";
 import {
   renderRandomTrailers,
-  showSearchResults,
+  renderSearchResults,
   renderMovies,
 } from "./utils/utils.js";
 import { setUpSearchForm } from "./utils/events.js";
@@ -45,7 +45,7 @@ async function handlePageLoad() {
   } else if (path === "/template/favorites.html") {
     console.log("favorites.html");
     try {
-      showFavorites();
+      renderFavorites();
       updateFavoriteButtons();
       setUpSearchForm();
     } catch (error) {
@@ -80,7 +80,7 @@ async function handlePageLoad() {
         const movies = await fetchSearchOmdb(searchQuery);
         console.log(movies);
 
-        showSearchResults(movies);
+        renderSearchResults(movies);
       } catch (error) {
         console.error(`Fel vid hämtning av sökresultat:`, error);
       }

@@ -1,7 +1,6 @@
 import { renderTrailers } from "../modules/caroussel.js";
 import {
   searchInput,
-  formRef,
   cardContainerRef,
   autocompleteListRef,
   movieInformationRef,
@@ -9,12 +8,6 @@ import {
 import { fullSingleMovie, createCard } from "../components/movieCard.js";
 import { addMovieClickListeners } from "./events.js";
 
-//sortera film efter bokstavsordning
-export function sortByAlphabet(movielist) {
-  return movielist.sort((a, b) =>
-    a.Title.toLowerCase().localeCompare(b.Title.toLowerCase())
-  );
-}
 //renderar ut mina trailers i min carousel på index.html
 export function renderRandomTrailers(movies) {
   if (!movies || movies.length === 0) {
@@ -49,11 +42,19 @@ export function renderMovies(movies, container) {
     addMovieClickListeners();
   }, 0);
 }
+// renderar ut sökresultaten
+export function renderSearchResults(movies) {
+  console.log(`Skriver ut mina sökresultat`);
 
-//Ordnar så första bokstaven är versal
-function firstCaseToUpper(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+  const sortedMovies = sortByAlphabet(movies);
+  sortedMovies.forEach((movie) => {
+    cardContainerRef.innerHTML += createCard(movie);
+  });
+  setTimeout(() => {
+    addMovieClickListeners();
+  }, 0);
 }
+
 // uppdaterar min söklista med li-element beroende på akutella sökresultat
 export function updateAutoCompleteList(input, movies) {
   clearAutoCompleteList(); //rensar listan först
@@ -105,26 +106,6 @@ export function clearAutoCompleteList() {
   autocompleteListRef.classList.add(`d-none`); // Dölj listan när vi rensar den
 }
 
-export function showSearchResults(movies) {
-  const queryParams = new URLSearchParams(window.location.search);
-  const query = queryParams.get(`s`) || queryParams.get(`query`);
-  console.log(movies);
-
-  //satte inte if sats på movies.length=== 0 eftersom min setUpSearchForm i events.js sköter error och vad som ska ske
-  if (window.location.pathname.includes("movie.html") && movies.length === 1) {
-    const movie = movies[0];
-    movieInformationRef.innerHTML = fullSingleMovie(movie);
-  } else {
-    const sortedMovies = sortByAlphabet(movies);
-    sortedMovies.forEach((movie) => {
-      cardContainerRef.innerHTML += createCard(movie);
-    });
-    setTimeout(() => {
-      addMovieClickListeners();
-    }, 0);
-  }
-}
-
 //förhindrar att texten avslutas mitt i, utan indikerar på att titeln egentligen är längre än vad som får plats
 export function truncateText(text, maxLength) {
   if (text.length <= maxLength) return text;
@@ -133,4 +114,14 @@ export function truncateText(text, maxLength) {
 //kort if/else för vad som ska visas beroende på om data existerar eller inte
 export function dataExist(data, param) {
   return data && data !== `N/A` ? data : param;
+}
+//Ordnar så första bokstaven är versal
+function firstCaseToUpper(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+//sortera film efter bokstavsordning
+export function sortByAlphabet(movielist) {
+  return movielist.sort((a, b) =>
+    a.Title.toLowerCase().localeCompare(b.Title.toLowerCase())
+  );
 }
