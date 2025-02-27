@@ -24,6 +24,7 @@ export function createCard(movieData) {
 
 // HTML för enskild film med full information
 export function fullSingleMovie(movieData) {
+  console.log(`Du har nått filmen:`, movieData.Title);
   const imgSrc = "/template/res/icons/missing-poster.svg";
   const emptyString = ``;
   const notAvailable = `Not provided`;

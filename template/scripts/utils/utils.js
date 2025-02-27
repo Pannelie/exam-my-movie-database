@@ -1,4 +1,3 @@
-import { fetchSearchOmdb } from "../modules/api.js";
 import { renderTrailers } from "../modules/caroussel.js";
 import {
   searchInput,
@@ -9,10 +8,14 @@ import {
 } from "./domUtils.js";
 import { fullSingleMovie, createCard } from "../components/movieCard.js";
 import { addMovieClickListeners } from "./events.js";
-//sortera film efter betyg, top 20
 
-//konvertera minuter till timmar+ minuter i filmtid
-
+//sortera film efter bokstavsordning
+export function sortByAlphabet(movielist) {
+  return movielist.sort((a, b) =>
+    a.Title.toLowerCase().localeCompare(b.Title.toLowerCase())
+  );
+}
+//renderar ut mina trailers i min carousel på index.html
 export function renderRandomTrailers(movies) {
   if (!movies || movies.length === 0) {
     console.error("Inga filmer att slumpa.");
@@ -31,62 +34,27 @@ export function renderRandomTrailers(movies) {
   });
 }
 
+//renderar ut mina filmer på index.html i alfabetisk ordning
 export function renderMovies(movies, container) {
   if (!container) {
     console.error("Container hittades inte!");
     return;
   }
+  const sortedMovies = sortByAlphabet(movies);
 
-  container.innerHTML = movies.map(createCard).join("");
+  container.innerHTML = sortedMovies.map(createCard).join("");
 
   // Lägg till event listeners efter renderingen
   setTimeout(() => {
     addMovieClickListeners();
   }, 0);
 }
-// export async function setUpSearchForm() {
-//   searchInput.addEventListener(`input`, async (event) => {
-//     // autocompleteListRef.classList.remove(`d-none`);
-//     const movieInput = event.target.value.trim(); //tar bort inledande och avslutande whitespace
-//     const movies = await fetchSearchOmdb(movieInput);
 
-//     console.log(`is this array:`, movies);
-//     updateAutoCompleteList(movieInput, movies);
-//   });
-
-//   document.addEventListener("click", (event) => {
-//     //eventlyssnare för om INTE searchinput eller autocompletelistref innehåller mitt event target, då ska följande ske
-//     if (
-//       !searchInput.contains(event.target) &&
-//       !autocompleteListRef.contains(event.target)
-//     ) {
-//       searchInput.placeholder = "";
-//       clearAutoCompleteList();
-//     }
-//   });
-//   formRef.addEventListener(`submit`, async (event) => {
-//     event.preventDefault();
-
-//     const movieInput = searchInput.value.trim();
-//     const movies = await fetchSearchOmdb(movieInput);
-
-//     if (movieInput === ``) {
-//       console.log(`inget valt`);
-//       searchInput.classList.add("custom-placeholder");
-//       searchInput.placeholder = `Please enter text...`;
-//     } else if (movies.length === 0) {
-//       searchInput.placeholder = `No match...`;
-//       searchInput.value = ""; // Rensa inputfältet
-//     } else if (movies.length === 1) {
-//       window.location.href = `movie.html?id=${encodeURIComponent(
-//         movies[0].imdbID
-//       )}`;
-//     } else {
-//       window.location.href = `search.html?s=${encodeURIComponent(movieInput)}`;
-//     }
-//   });
-// }
-
+//Ordnar så första bokstaven är versal
+function firstCaseToUpper(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+// uppdaterar min söklista med li-element beroende på akutella sökresultat
 export function updateAutoCompleteList(input, movies) {
   clearAutoCompleteList(); //rensar listan först
 
@@ -131,10 +99,7 @@ export function updateAutoCompleteList(input, movies) {
   }
 }
 
-function firstCaseToUpper(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
+//Rensar min ul och sätter den till display none
 export function clearAutoCompleteList() {
   autocompleteListRef.innerHTML = "";
   autocompleteListRef.classList.add(`d-none`); // Dölj listan när vi rensar den
@@ -145,21 +110,18 @@ export function showSearchResults(movies) {
   const query = queryParams.get(`s`) || queryParams.get(`query`);
   console.log(movies);
 
+  //satte inte if sats på movies.length=== 0 eftersom min setUpSearchForm i events.js sköter error och vad som ska ske
   if (window.location.pathname.includes("movie.html") && movies.length === 1) {
     const movie = movies[0];
     movieInformationRef.innerHTML = fullSingleMovie(movie);
-  } else if (window.location.pathname.includes("search.html")) {
-    cardContainerRef.innerHTML = ``;
-    if (movies.length === 0) {
-      cardContainerRef.innerHTML = `<p>No results found for "${query}".</p>`;
-    } else {
-      movies.forEach((movie) => {
-        cardContainerRef.innerHTML += createCard(movie);
-      });
-      setTimeout(() => {
-        addMovieClickListeners();
-      }, 0);
-    }
+  } else {
+    const sortedMovies = sortByAlphabet(movies);
+    sortedMovies.forEach((movie) => {
+      cardContainerRef.innerHTML += createCard(movie);
+    });
+    setTimeout(() => {
+      addMovieClickListeners();
+    }, 0);
   }
 }
 
@@ -168,7 +130,7 @@ export function truncateText(text, maxLength) {
   if (text.length <= maxLength) return text;
   return text.substring(0, text.lastIndexOf(" ", maxLength)) + "...";
 }
-
+//kort if/else för vad som ska visas beroende på om data existerar eller inte
 export function dataExist(data, param) {
   return data && data !== `N/A` ? data : param;
 }

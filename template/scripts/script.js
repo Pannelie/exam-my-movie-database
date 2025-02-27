@@ -17,7 +17,6 @@ async function handlePageLoad() {
   console.log(`if search:`, searchQuery);
 
   const movies = await fetchMovies();
-  console.log(`this is`, movies);
 
   updateFavoriteButtons();
   // setUpSearchForm();

@@ -2,6 +2,7 @@ import { cardContainerRef } from "./domUtils.js";
 import { createCard } from "../components/movieCard.js";
 import { addMovieClickListeners } from "./events.js";
 import { fetchFullOmdb } from "../modules/api.js";
+import { sortByAlphabet } from "./utils.js";
 
 //plats för att lagra mina favoriter
 export function getFavorites() {
@@ -45,10 +46,11 @@ export async function saveFavorite(event) {
 
 export function showFavorites() {
   const favorites = getFavorites();
+  const sortedFavorites = sortByAlphabet(favorites);
 
   cardContainerRef.innerHTML = ``;
 
-  favorites.forEach((movie) => {
+  sortedFavorites.forEach((movie) => {
     const movieCardHTML = createCard(movie);
     cardContainerRef.innerHTML += movieCardHTML;
   });
@@ -76,5 +78,4 @@ export function updateFavoriteButtons() {
       heartSymbol.classList.add("fa-regular");
     }
   });
-  console.log(`hit kom jag i favoritebtns`);
 }
