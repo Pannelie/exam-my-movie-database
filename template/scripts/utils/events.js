@@ -77,3 +77,8 @@ export async function setUpSearchForm() {
     }
   });
 }
+
+export function handleMovieClick(id) {
+  window.location.href = `/template/movie.html?id=${id}`; // Navigera till filmens detaljsida
+  clearAutoCompleteList(); // Rensa auto-complete listan när en film är vald
+}

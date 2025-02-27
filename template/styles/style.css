@@ -243,23 +243,29 @@ body {
   ); /* Gör att listan hamnar precis under inputfältet med 5px marginal */
 
   width: 50%; /* Ser till att listan blir lika bred som inputfältet */
+  max-height: 350px;
   background-color: white;
   border: 1px solid #ccc; /* Ger en lätt ram för bättre synlighet */
   border-radius: 0 0 10px 10px; /* Rundade hörn nedåt */
   list-style-type: none; /* Tar bort standardpunkterna från listan */
 
   overflow-y: auto; /* Gör att listan scrollar om den blir för lång */
+  scrollbar-width: none;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Lägger till en skugga för bättre synlighet */
   z-index: 1000; /* Håller listan ovanför andra element */
 }
 
 /* Styla varje list-item snyggt */
 .search__list-item {
+  display: flex;
+  flex-direction: row;
   padding: 10px;
   cursor: pointer;
   font-family: var(--main-font-family);
   font-size: 1rem;
   color: black;
+  transition: background-color 0.3s ease-in-out;
+  overflow: hidden;
 }
 .search__list-item:nth-child(odd) {
   background-color: #f0e5c0;
@@ -270,6 +276,25 @@ body {
   background-color: #f5c518;
   color: white;
 }
+.search__list-item:hover .search__list-img {
+  transform: scale(1.5); /* Förstorar bilden med 20% */
+}
+
+.search__list-img {
+  height: 7rem;
+  width: 5rem;
+  object-fit: cover;
+  transition: transform 0.3s ease; /
+}
+
+
+.search__list-text {
+margin-left: 2rem;
+transition: transform 0.3s ease;
+}
+
+.search__list-item:hover .search__list-text {
+  transform: translateX(1rem); /* Flyttar texten 10px åt höger */ }
 
 @media screen and (max-width: 810px) {
   .movieCard__title--big {

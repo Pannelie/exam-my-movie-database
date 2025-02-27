@@ -6,7 +6,7 @@ import {
   movieInformationRef,
 } from "./domUtils.js";
 import { fullSingleMovie, createCard } from "../components/movieCard.js";
-import { addMovieClickListeners } from "./events.js";
+import { addMovieClickListeners, handleMovieClick } from "./events.js";
 
 //renderar ut mina trailers i min carousel på index.html
 export function renderRandomTrailers(movies) {
@@ -97,7 +97,7 @@ export function updateAutoCompleteList(input, movies) {
     listItemImg.alt = `Poster från filmen: ${matchingMovies[i].Title}`;
     listItemImg.classList.add("search__list-img");
 
-    //skapar text-element
+    //skapar text-elementch
     const listItemText = document.createElement("p");
     listItemText.textContent = firstCaseToUpper(matchingMovies[i].Title);
     listItemText.classList.add("search__list-text");
@@ -108,10 +108,9 @@ export function updateAutoCompleteList(input, movies) {
     listItemRef.appendChild(listItemImg);
     listItemRef.appendChild(listItemText);
 
-    listItemRef.addEventListener(`click`, () => {
-      searchInput.value = matchingMovies[i].Title;
-      clearAutoCompleteList();
-    });
+    listItemRef.addEventListener(`click`, () =>
+      handleMovieClick(matchingMovies[i].imdbID)
+    );
 
     autocompleteListRef.appendChild(listItemRef);
   }
