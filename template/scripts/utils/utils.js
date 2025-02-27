@@ -84,12 +84,29 @@ export function updateAutoCompleteList(input, movies) {
 
   for (let i = 0; i < Math.min(matchingMovies.length, 10); i++) {
     console.log(matchingMovies[i].Title);
-
+    //skapa list-item
     const listItemRef = document.createElement(`li`);
     listItemRef.classList.add(`search__list-item`);
 
-    listItemRef.textContent = firstCaseToUpper(matchingMovies[i].Title);
+    //skapar img
+    const listItemImg = document.createElement(`img`);
+    listItemImg.src = dataExist(
+      matchingMovies[i].Poster,
+      "/template/res/icons/missing-poster.svg"
+    );
+    listItemImg.alt = `Poster från filmen: ${matchingMovies[i].Title}`;
+    listItemImg.classList.add("search__list-img");
+
+    //skapar text-element
+    const listItemText = document.createElement("p");
+    listItemText.textContent = firstCaseToUpper(matchingMovies[i].Title);
+    listItemText.classList.add("search__list-text");
+
+    // listItemRef.textContent = firstCaseToUpper(matchingMovies[i].Title);
     // createCard(matchingMovies[i].name);
+
+    listItemRef.appendChild(listItemImg);
+    listItemRef.appendChild(listItemText);
 
     listItemRef.addEventListener(`click`, () => {
       searchInput.value = matchingMovies[i].Title;
