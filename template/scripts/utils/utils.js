@@ -81,9 +81,32 @@ export function updateAutoCompleteList(input, movies) {
   } else {
     autocompleteListRef.classList.remove(`d-none`);
   }
+  showAllSearches(matchingMovies, input);
+  createListItem(matchingMovies);
+}
 
-  for (let i = 0; i < Math.min(matchingMovies.length, 10); i++) {
-    console.log(matchingMovies[i].Title);
+function showAllSearches(match, input) {
+  if (match.length > 1) {
+    const showAllItem = document.createElement(`li`);
+    showAllItem.classList.add(`search__list-item`, `search__list-show-all`);
+
+    const showAllText = document.createElement(`p`);
+    showAllText.textContent = `Click here to show all results...`;
+    showAllText.classList.add(`search__list-text--big`);
+
+    showAllItem.appendChild(showAllText);
+    showAllItem.addEventListener("click", () => {
+      window.location.href = `/template/search.html?query=${input}`; // Navigera till en sida som visar alla sökresultat
+      clearAutoCompleteList(); // Rensa auto-complete listan när användaren klickar
+    });
+
+    autocompleteListRef.appendChild(showAllItem);
+  }
+}
+
+function createListItem(match) {
+  for (let i = 0; i < Math.min(match.length, 10); i++) {
+    console.log(match[i].Title);
     //skapa list-item
     const listItemRef = document.createElement(`li`);
     listItemRef.classList.add(`search__list-item`);
@@ -91,15 +114,15 @@ export function updateAutoCompleteList(input, movies) {
     //skapar img
     const listItemImg = document.createElement(`img`);
     listItemImg.src = dataExist(
-      matchingMovies[i].Poster,
+      match[i].Poster,
       "/template/res/icons/missing-poster.svg"
     );
-    listItemImg.alt = `Poster från filmen: ${matchingMovies[i].Title}`;
+    listItemImg.alt = `Poster från filmen: ${match[i].Title}`;
     listItemImg.classList.add("search__list-img");
 
     //skapar text-elementch
     const listItemText = document.createElement("p");
-    listItemText.textContent = firstCaseToUpper(matchingMovies[i].Title);
+    listItemText.textContent = firstCaseToUpper(match[i].Title);
     listItemText.classList.add("search__list-text");
 
     // listItemRef.textContent = firstCaseToUpper(matchingMovies[i].Title);
@@ -109,13 +132,12 @@ export function updateAutoCompleteList(input, movies) {
     listItemRef.appendChild(listItemText);
 
     listItemRef.addEventListener(`click`, () =>
-      handleMovieClick(matchingMovies[i].imdbID)
+      handleMovieClick(match[i].imdbID)
     );
 
     autocompleteListRef.appendChild(listItemRef);
   }
 }
-
 //Rensar min ul och sätter den till display none
 export function clearAutoCompleteList() {
   autocompleteListRef.innerHTML = "";

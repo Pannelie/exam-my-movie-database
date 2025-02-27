@@ -292,7 +292,15 @@ body {
 margin-left: 2rem;
 transition: transform 0.3s ease;
 }
+.search__list-text--big {
+  font-weight: 600;
+  text-align: center;
+}
 
+.search__list-show-all{
+ display: flex;
+ justify-content: center;
+}
 .search__list-item:hover .search__list-text {
   transform: translateX(1rem); /* Flyttar texten 10px åt höger */ }
 
