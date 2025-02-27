@@ -1,18 +1,14 @@
-import { fetchSearchOmdb } from "../modules/api.js";
 import { renderTrailers } from "../modules/caroussel.js";
 import {
   searchInput,
-  formRef,
   cardContainerRef,
   autocompleteListRef,
   movieInformationRef,
 } from "./domUtils.js";
 import { fullSingleMovie, createCard } from "../components/movieCard.js";
-import { addMovieClickListeners } from "./events.js";
-//sortera film efter betyg, top 20
+import { addMovieClickListeners, handleMovieClick } from "./events.js";
 
-//konvertera minuter till timmar+ minuter i filmtid
-
+//renderar ut mina trailers i min carousel på index.html
 export function renderRandomTrailers(movies) {
   if (!movies || movies.length === 0) {
     console.error("Inga filmer att slumpa.");
@@ -31,49 +27,35 @@ export function renderRandomTrailers(movies) {
   });
 }
 
-export async function setUpSearchForm() {
-  searchInput.addEventListener(`input`, async (event) => {
-    // autocompleteListRef.classList.remove(`d-none`);
-    const movieInput = event.target.value.trim(); //tar bort inledande och avslutande whitespace
-    const movies = await fetchSearchOmdb(movieInput);
+//renderar ut mina filmer på index.html i alfabetisk ordning
+export function renderMovies(movies, container) {
+  if (!container) {
+    console.error("Container hittades inte!");
+    return;
+  }
+  const sortedMovies = sortByAlphabet(movies);
 
-    console.log(movies);
-    updateAutoCompleteList(movieInput, movies);
+  container.innerHTML = sortedMovies.map(createCard).join("");
+
+  // Lägg till event listeners efter renderingen
+  setTimeout(() => {
+    addMovieClickListeners();
+  }, 0);
+}
+// renderar ut sökresultaten
+export function renderSearchResults(movies) {
+  console.log(`Skriver ut mina sökresultat`);
+
+  const sortedMovies = sortByAlphabet(movies);
+  sortedMovies.forEach((movie) => {
+    cardContainerRef.innerHTML += createCard(movie);
   });
-
-  document.addEventListener("click", (event) => {
-    //eventlyssnare för om INTE searchinput eller autocompletelistref innehåller mitt event target, då ska följande ske
-    if (
-      !searchInput.contains(event.target) &&
-      !autocompleteListRef.contains(event.target)
-    ) {
-      searchInput.placeholder = "";
-      clearAutoCompleteList();
-    }
-  });
-  formRef.addEventListener(`submit`, async (event) => {
-    event.preventDefault();
-
-    const movieInput = searchInput.value.trim();
-    const movies = await fetchSearchOmdb(movieInput);
-
-    if (movieInput === ``) {
-      console.log(`inget valt`);
-      searchInput.classList.add("custom-placeholder");
-      searchInput.placeholder = `Please enter text...`;
-    } else if (movies.length === 0) {
-      searchInput.placeholder = `No match...`;
-      searchInput.value = ""; // Rensa inputfältet
-    } else if (movies.length === 1) {
-      window.location.href = `movie.html?id=${encodeURIComponent(
-        movies[0].imdbID
-      )}`;
-    } else {
-      window.location.href = `search.html?s=${encodeURIComponent(movieInput)}`;
-    }
-  });
+  setTimeout(() => {
+    addMovieClickListeners();
+  }, 0);
 }
 
+// uppdaterar min söklista med li-element beroende på akutella sökresultat
 export function updateAutoCompleteList(input, movies) {
   clearAutoCompleteList(); //rensar listan först
 
@@ -92,62 +74,74 @@ export function updateAutoCompleteList(input, movies) {
       )
     );
 
-  console.log(matchingMovies);
+  console.log(`the same as:`, matchingMovies);
 
   if (matchingMovies.length === 0) {
     return; // Avbryt om inga filmer matchar
   } else {
     autocompleteListRef.classList.remove(`d-none`);
   }
+  showAllSearches(matchingMovies, input);
+  createListItem(matchingMovies);
+}
 
-  for (let i = 0; i < Math.min(matchingMovies.length, 10); i++) {
-    console.log(matchingMovies[i].Title);
+function showAllSearches(match, input) {
+  if (match.length > 1) {
+    const showAllItem = document.createElement(`li`);
+    showAllItem.classList.add(`search__list-item`, `search__list-show-all`);
 
+    const showAllText = document.createElement(`p`);
+    showAllText.textContent = `Click here to show all results...`;
+    showAllText.classList.add(`search__list-text--big`);
+
+    showAllItem.appendChild(showAllText);
+    showAllItem.addEventListener("click", () => {
+      window.location.href = `/template/search.html?query=${input}`; // Navigera till en sida som visar alla sökresultat
+      clearAutoCompleteList(); // Rensa auto-complete listan när användaren klickar
+    });
+
+    autocompleteListRef.appendChild(showAllItem);
+  }
+}
+
+function createListItem(match) {
+  for (let i = 0; i < Math.min(match.length, 10); i++) {
+    console.log(match[i].Title);
+    //skapa list-item
     const listItemRef = document.createElement(`li`);
     listItemRef.classList.add(`search__list-item`);
 
-    listItemRef.textContent = firstCaseToUpper(matchingMovies[i].Title);
+    //skapar img
+    const listItemImg = document.createElement(`img`);
+    listItemImg.src = dataExist(
+      match[i].Poster,
+      "/template/res/icons/missing-poster.svg"
+    );
+    listItemImg.alt = `Poster från filmen: ${match[i].Title}`;
+    listItemImg.classList.add("search__list-img");
+
+    //skapar text-elementch
+    const listItemText = document.createElement("p");
+    listItemText.textContent = firstCaseToUpper(match[i].Title);
+    listItemText.classList.add("search__list-text");
+
+    // listItemRef.textContent = firstCaseToUpper(matchingMovies[i].Title);
     // createCard(matchingMovies[i].name);
 
-    listItemRef.addEventListener(`click`, () => {
-      searchInput.value = matchingMovies[i].Title;
-      clearAutoCompleteList();
-    });
+    listItemRef.appendChild(listItemImg);
+    listItemRef.appendChild(listItemText);
+
+    listItemRef.addEventListener(`click`, () =>
+      handleMovieClick(match[i].imdbID)
+    );
 
     autocompleteListRef.appendChild(listItemRef);
   }
 }
-
-function firstCaseToUpper(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-function clearAutoCompleteList() {
+//Rensar min ul och sätter den till display none
+export function clearAutoCompleteList() {
   autocompleteListRef.innerHTML = "";
   autocompleteListRef.classList.add(`d-none`); // Dölj listan när vi rensar den
-}
-
-export function showSearchResults(movies) {
-  const queryParams = new URLSearchParams(window.location.search);
-  const query = queryParams.get(`s`) || queryParams.get(`query`);
-  console.log(movies);
-
-  if (window.location.pathname.includes("movie.html") && movies.length === 1) {
-    const movie = movies[0];
-    movieInformationRef.innerHTML = fullSingleMovie(movie);
-  } else if (window.location.pathname.includes("search.html")) {
-    cardContainerRef.innerHTML = ``;
-    if (movies.length === 0) {
-      cardContainerRef.innerHTML = `<p>No results found for "${query}".</p>`;
-    } else {
-      movies.forEach((movie) => {
-        cardContainerRef.innerHTML += createCard(movie);
-      });
-      setTimeout(() => {
-        addMovieClickListeners();
-      }, 0);
-    }
-  }
 }
 
 //förhindrar att texten avslutas mitt i, utan indikerar på att titeln egentligen är längre än vad som får plats
@@ -155,7 +149,17 @@ export function truncateText(text, maxLength) {
   if (text.length <= maxLength) return text;
   return text.substring(0, text.lastIndexOf(" ", maxLength)) + "...";
 }
-
+//kort if/else för vad som ska visas beroende på om data existerar eller inte
 export function dataExist(data, param) {
   return data && data !== `N/A` ? data : param;
+}
+//Ordnar så första bokstaven är versal
+function firstCaseToUpper(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+//sortera film efter bokstavsordning
+export function sortByAlphabet(movielist) {
+  return movielist.sort((a, b) =>
+    a.Title.toLowerCase().localeCompare(b.Title.toLowerCase())
+  );
 }

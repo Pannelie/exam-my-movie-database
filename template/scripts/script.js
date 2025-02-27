@@ -1,12 +1,13 @@
 import { fetchMovies, fetchFullOmdb, fetchSearchOmdb } from "./modules/api.js";
-import { renderMovies, fullSingleMovie } from "./components/movieCard.js";
+import { fullSingleMovie } from "./components/movieCard.js";
 import { cardContainerRef, movieInformationRef } from "./utils/domUtils.js";
-import { showFavorites, updateFavoriteButtons } from "./utils/storage.js";
+import { renderFavorites, updateFavoriteButtons } from "./utils/storage.js";
 import {
   renderRandomTrailers,
-  setUpSearchForm,
-  showSearchResults,
+  renderSearchResults,
+  renderMovies,
 } from "./utils/utils.js";
+import { setUpSearchForm } from "./utils/events.js";
 
 async function handlePageLoad() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -18,7 +19,7 @@ async function handlePageLoad() {
   const movies = await fetchMovies();
 
   updateFavoriteButtons();
-  setUpSearchForm();
+  // setUpSearchForm();
 
   if (
     path === "/template/" ||
@@ -34,7 +35,7 @@ async function handlePageLoad() {
         renderRandomTrailers(movies);
         renderMovies(movies, cardContainerRef);
         updateFavoriteButtons();
-        setUpSearchForm(movies);
+        setUpSearchForm();
       } else {
         console.error("Inga filmer att visa.");
       }
@@ -43,12 +44,16 @@ async function handlePageLoad() {
     }
   } else if (path === "/template/favorites.html") {
     console.log("favorites.html");
-    showFavorites();
-    updateFavoriteButtons();
-    setUpSearchForm(movies);
+    try {
+      renderFavorites();
+      updateFavoriteButtons();
+      setUpSearchForm();
+    } catch (error) {
+      console.error(`fel vid hämtning`, error);
+    }
   } else if (path === "/template/movie.html") {
     console.log("movie.html");
-    setUpSearchForm(movies);
+    setUpSearchForm();
     updateFavoriteButtons();
 
     if (!movieId) {
@@ -75,13 +80,13 @@ async function handlePageLoad() {
         const movies = await fetchSearchOmdb(searchQuery);
         console.log(movies);
 
-        showSearchResults(movies);
+        renderSearchResults(movies);
       } catch (error) {
         console.error(`Fel vid hämtning av sökresultat:`, error);
       }
     }
     updateFavoriteButtons();
-    setUpSearchForm(movies);
+    setUpSearchForm();
   } else {
     console.warn("Okänd sida:", path);
   }

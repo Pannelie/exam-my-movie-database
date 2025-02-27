@@ -1,34 +1,18 @@
-//skapande av varje film-kort, stor och liten variant?
-// innerhtml frånm variabel
-
-import { addMovieClickListeners } from "../utils/events.js";
-import { movieCardImgRef } from "../utils/domUtils.js";
 import { truncateText, dataExist } from "../utils/utils.js";
-// import { updateFavoriteButtons } from "../utils/storage.js";
 
-export function renderMovies(movies, container) {
-  if (!container) {
-    console.error("Container hittades inte!");
-    return;
-  }
-
-  container.innerHTML = movies.map(createCard).join("");
-
-  // Lägg till event listeners efter renderingen
-  setTimeout(() => {
-    addMovieClickListeners();
-  }, 0);
-}
-
+// HTML för de enskilda filmer som kortfattat ska visas upp i galleri
 export function createCard(movieData) {
   const imgSrc = "/template/res/icons/missing-poster.svg";
 
   return `
   <article class="movieCard__article movieCard__article--cursor">
-  <button class="fav-btn" data-id="${
+  <button class="fav-btn" aria-label="Lägg till i favoriter" data-id="${
     movieData.imdbID
   }"><i class="fa-regular fa-heart heart-symbol"></i></button>
-    <img src="${dataExist(movieData.Poster, imgSrc)}" alt="${
+    <img src="${dataExist(
+      movieData.Poster,
+      imgSrc
+    )}" alt="Poster från filmen: ${
     movieData.Title
   }" class="movieCard__img movieCard__img--zoom">
     <p class="movieCard__title movieCard__title--small">${truncateText(
@@ -38,7 +22,9 @@ export function createCard(movieData) {
   </article>`;
 }
 
+// HTML för enskild film med full information
 export function fullSingleMovie(movieData) {
+  console.log(`Du har nått filmen:`, movieData.Title);
   const imgSrc = "/template/res/icons/missing-poster.svg";
   const emptyString = ``;
   const notAvailable = `Not provided`;
@@ -49,14 +35,14 @@ export function fullSingleMovie(movieData) {
     movieData.Title
   } poster" 
             class="movieCard__img movieCard__img--grid" />
-            <button class="fav-btn" data-id="${
+            <button class="fav-btn" aria-label="Lägg till i favoriter" data-id="${
               movieData.imdbID
             }"><i class="fa-regular fa-heart heart-symbol"></i></button>
         </article>
         <section class="movieCard__text-content">
-            <h2 class="movieCard__title movieCard__title--big">${
+            <h1 class="movieCard__title movieCard__title--big">${
               movieData.Title
-            }</h2>
+            }</h1>
             <section class="movieCard__flex-container">
                 <p class="movieCard__text movieCard__text--short">${dataExist(
                   movieData.Genre,
