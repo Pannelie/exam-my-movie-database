@@ -31,6 +31,19 @@ export function renderRandomTrailers(movies) {
   });
 }
 
+export function renderMovies(movies, container) {
+  if (!container) {
+    console.error("Container hittades inte!");
+    return;
+  }
+
+  container.innerHTML = movies.map(createCard).join("");
+
+  // Lägg till event listeners efter renderingen
+  setTimeout(() => {
+    addMovieClickListeners();
+  }, 0);
+}
 export async function setUpSearchForm() {
   searchInput.addEventListener(`input`, async (event) => {
     // autocompleteListRef.classList.remove(`d-none`);

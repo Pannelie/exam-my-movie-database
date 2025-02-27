@@ -1,11 +1,12 @@
 import { fetchMovies, fetchFullOmdb, fetchSearchOmdb } from "./modules/api.js";
-import { renderMovies, fullSingleMovie } from "./components/movieCard.js";
+import { fullSingleMovie } from "./components/movieCard.js";
 import { cardContainerRef, movieInformationRef } from "./utils/domUtils.js";
 import { showFavorites, updateFavoriteButtons } from "./utils/storage.js";
 import {
   renderRandomTrailers,
   setUpSearchForm,
   showSearchResults,
+  renderMovies,
 } from "./utils/utils.js";
 
 async function handlePageLoad() {

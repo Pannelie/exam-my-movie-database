@@ -1,23 +1,10 @@
 //skapande av varje film-kort, stor och liten variant?
 // innerhtml frånm variabel
 
-import { addMovieClickListeners } from "../utils/events.js";
+// import { addMovieClickListeners } from "../utils/events.js";
 import { truncateText, dataExist } from "../utils/utils.js";
 // import { updateFavoriteButtons } from "../utils/storage.js";
 
-export function renderMovies(movies, container) {
-  if (!container) {
-    console.error("Container hittades inte!");
-    return;
-  }
-
-  container.innerHTML = movies.map(createCard).join("");
-
-  // Lägg till event listeners efter renderingen
-  setTimeout(() => {
-    addMovieClickListeners();
-  }, 0);
-}
 // HTML för de enskilda filmer som kortfattat ska visas upp i galleri
 export function createCard(movieData) {
   const imgSrc = "/template/res/icons/missing-poster.svg";
