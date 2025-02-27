@@ -17,9 +17,10 @@ async function handlePageLoad() {
   console.log(`if search:`, searchQuery);
 
   const movies = await fetchMovies();
+  console.log(`this is`, movies);
 
   updateFavoriteButtons();
-  // setUpSearchForm();
+  setUpSearchForm();
 
   if (
     path === "/template/" ||
@@ -35,7 +36,7 @@ async function handlePageLoad() {
         renderRandomTrailers(movies);
         renderMovies(movies, cardContainerRef);
         updateFavoriteButtons();
-        setUpSearchForm(movies);
+        setUpSearchForm();
       } else {
         console.error("Inga filmer att visa.");
       }
@@ -44,12 +45,16 @@ async function handlePageLoad() {
     }
   } else if (path === "/template/favorites.html") {
     console.log("favorites.html");
-    showFavorites();
-    updateFavoriteButtons();
-    setUpSearchForm(movies);
+    try {
+      showFavorites();
+      updateFavoriteButtons();
+      setUpSearchForm();
+    } catch (error) {
+      console.error(`fel vid hämtning`, error);
+    }
   } else if (path === "/template/movie.html") {
     console.log("movie.html");
-    setUpSearchForm(movies);
+    setUpSearchForm();
     updateFavoriteButtons();
 
     if (!movieId) {
@@ -82,7 +87,7 @@ async function handlePageLoad() {
       }
     }
     updateFavoriteButtons();
-    setUpSearchForm(movies);
+    setUpSearchForm();
   } else {
     console.warn("Okänd sida:", path);
   }

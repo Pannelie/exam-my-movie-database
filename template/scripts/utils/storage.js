@@ -55,6 +55,7 @@ export function showFavorites() {
   setTimeout(() => {
     addMovieClickListeners();
   }, 0);
+  console.log(`hit kom jag i showFavorites`);
 }
 
 export function updateFavoriteButtons() {
@@ -75,4 +76,5 @@ export function updateFavoriteButtons() {
       heartSymbol.classList.add("fa-regular");
     }
   });
+  console.log(`hit kom jag i favoritebtns`);
 }

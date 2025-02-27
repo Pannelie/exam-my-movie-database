@@ -1,9 +1,4 @@
-//skapande av varje film-kort, stor och liten variant?
-// innerhtml frånm variabel
-
-// import { addMovieClickListeners } from "../utils/events.js";
 import { truncateText, dataExist } from "../utils/utils.js";
-// import { updateFavoriteButtons } from "../utils/storage.js";
 
 // HTML för de enskilda filmer som kortfattat ska visas upp i galleri
 export function createCard(movieData) {

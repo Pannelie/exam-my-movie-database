@@ -87,7 +87,7 @@ export async function setUpSearchForm() {
   });
 }
 
-export function updateAutoCompleteList(input, movies) {
+function updateAutoCompleteList(input, movies) {
   clearAutoCompleteList(); //rensar listan först
 
   if (!movies || movies.length === 0) {
