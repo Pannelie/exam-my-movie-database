@@ -86,17 +86,13 @@ body {
   cursor: pointer;
 }
 
-.popular-title {
-  color: var(--primary-white);
-  text-align: center;
-  margin: 1rem 0 2.5rem;
-  font-family: var(--main-font-family);
-}
-
+.popular-title,
 .favorites-title,
 .search-title {
   color: var(--primary-white);
-  margin: 3rem 0 2.5rem;
+  text-align: center;
+  margin: 2rem 0 3rem;
+  font-family: var(--main-font-family);
 }
 
 /*------ moviecards style --------*/
