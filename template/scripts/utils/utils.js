@@ -37,7 +37,7 @@ export async function setUpSearchForm() {
     const movieInput = event.target.value.trim(); //tar bort inledande och avslutande whitespace
     const movies = await fetchSearchOmdb(movieInput);
 
-    console.log(movies);
+    console.log(`is this array:`, movies);
     updateAutoCompleteList(movieInput, movies);
   });
 
@@ -92,7 +92,7 @@ export function updateAutoCompleteList(input, movies) {
       )
     );
 
-  console.log(matchingMovies);
+  console.log(`the same as:`, matchingMovies);
 
   if (matchingMovies.length === 0) {
     return; // Avbryt om inga filmer matchar

@@ -2,7 +2,6 @@
 // innerhtml frånm variabel
 
 import { addMovieClickListeners } from "../utils/events.js";
-import { movieCardImgRef } from "../utils/domUtils.js";
 import { truncateText, dataExist } from "../utils/utils.js";
 // import { updateFavoriteButtons } from "../utils/storage.js";
 

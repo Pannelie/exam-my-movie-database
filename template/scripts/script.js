@@ -18,7 +18,7 @@ async function handlePageLoad() {
   const movies = await fetchMovies();
 
   updateFavoriteButtons();
-  setUpSearchForm();
+  // setUpSearchForm();
 
   if (
     path === "/template/" ||
