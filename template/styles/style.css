@@ -40,7 +40,7 @@ body {
 
 .header {
   background-color: var(--header-grey);
-  width: 100%;
+  /* width: 100%; */
   padding: 1.5rem;
   z-index: 999;
 }
@@ -101,7 +101,7 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   grid-template-rows: 550px;
-  gap: 1rem;
+  row-gap: 2rem;
   justify-items: center;
   margin-bottom: 4rem;
 }
@@ -116,6 +116,8 @@ body {
   height: 550px;
   max-width: 370px;
   border-radius: 0.6rem;
+
+  padding: 0 1rem;
 }
 
 .movieCard__article--cursor {
@@ -180,7 +182,9 @@ body {
 
 .movieCard__title--small {
   font-size: 1.2rem;
+  font-weight: 600;
   margin: 0.3rem 0 0.5rem;
+  text-align: center;
 }
 
 .movieCard__title--big {
@@ -307,17 +311,6 @@ body {
   justify-content: center;
 }
 
-@media screen and (max-width: 810px) {
-  .movieCard__title--big {
-    font-size: 1.5rem;
-    margin: 1rem 1rem 0.5rem;
-  }
-
-  .movieCard__flex-container {
-    margin: 0.2rem 1rem 0.5rem;
-  }
-}
-
 @media screen and (max-width: 750px) {
   .movie-information {
     justify-items: center;
@@ -331,9 +324,6 @@ body {
   .movieCard__img-container {
     grid-column: span 4;
   }
-  /* .movieCard__img--grid {
-    grid-column: span 4;
-  } */
 
   .movieCard__text-content {
     padding: 0 2rem 2rem;
@@ -359,50 +349,27 @@ body {
     margin-left: 0;
   }
 
-  .search__list-item {
+  .header__flex {
     flex-direction: column;
-    align-items: center;
+  }
+  .header__fav-btn {
+    order: 1;
+    font-size: 1.2rem;
+    align-self: flex-end;
+  }
+  .header__link {
+    order: 2;
+    margin: 1rem 0 2rem;
   }
 
-  .search__list-text {
-    margin: 0;
-    text-align: center;
-  }
-
-  .search__list-item--cursor:hover {
-    background-color: #f5c518;
-    color: white;
-  }
-  .search__list-img {
-    height: 7rem;
-    width: 5rem;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-
-  .search__list-item--cursor:hover {
-    background-color: #f5c518;
-    color: white;
-  }
-
-  .search__list-text {
-    margin-left: 0;
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 0.3s ease, visability 0s linear 0.3s;
-  }
-
-  .search__list-item:hover .search__list-text {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visability 0s linear 0s;
+  .header__form {
+    order: 3;
   }
 }
 
 @media screen and (max-width: 550px) {
   .search__autocomplete-list {
-    width: fit-content;
-    margin-right: 10rem;
+    width: 65%;
   }
 
   .search__list-item {
