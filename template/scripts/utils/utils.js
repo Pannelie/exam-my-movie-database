@@ -59,9 +59,12 @@ export function renderSearchResults(movies) {
 export function updateAutoCompleteList(input, movies) {
   clearAutoCompleteList(); //rensar listan först
 
-  if (!movies || movies.length === 0) {
+  if (!movies || input.length < 3) {
+    autocompleteListRef.classList.add(`d-none`);
     return; // Avbryt om inga filmer hittades
   }
+
+  autocompleteListRef.classList.remove("d-none");
 
   const inputLower = input.toLowerCase();
   const matchingMovies = movies
@@ -76,22 +79,29 @@ export function updateAutoCompleteList(input, movies) {
 
   console.log(`the same as:`, matchingMovies);
 
-  if (matchingMovies.length === 0) {
-    return; // Avbryt om inga filmer matchar
-  } else {
-    autocompleteListRef.classList.remove(`d-none`);
+  if (input.length > 3 && matchingMovies.length === 0) {
+    noMatch();
+    return;
   }
-  showAllSearches(matchingMovies, input);
+
+  if (matchingMovies.length > 1) {
+    showAllSearches(matchingMovies, input);
+  }
+
   createListItem(matchingMovies);
 }
 
 function showAllSearches(match, input) {
   if (match.length > 1) {
     const showAllItem = document.createElement(`li`);
-    showAllItem.classList.add(`search__list-item`, `search__list-show-all`);
+    showAllItem.classList.add(
+      `search__list-item`,
+      `search__list-item--cursor`,
+      `search__list-show-all`
+    );
 
     const showAllText = document.createElement(`p`);
-    showAllText.textContent = `Click here to show all results...`;
+    showAllText.textContent = `All results`;
     showAllText.classList.add(`search__list-text--big`);
 
     showAllItem.appendChild(showAllText);
@@ -104,12 +114,24 @@ function showAllSearches(match, input) {
   }
 }
 
+function noMatch() {
+  const showAllItem = document.createElement(`li`);
+  showAllItem.classList.add(`search__list-item`, `search__list-show-all`);
+
+  const showAllText = document.createElement(`p`);
+  showAllText.textContent = `No match`;
+  showAllText.classList.add(`search__list-text--big`);
+
+  showAllItem.appendChild(showAllText);
+  autocompleteListRef.appendChild(showAllItem);
+}
+
 function createListItem(match) {
   for (let i = 0; i < Math.min(match.length, 10); i++) {
     console.log(match[i].Title);
     //skapa list-item
     const listItemRef = document.createElement(`li`);
-    listItemRef.classList.add(`search__list-item`);
+    listItemRef.classList.add(`search__list-item`, `search__list-item--cursor`);
 
     //skapar img
     const listItemImg = document.createElement(`img`);

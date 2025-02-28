@@ -238,71 +238,74 @@ body {
 
 .search__autocomplete-list {
   position: absolute;
-  top: calc(
-    100% + 5px
-  ); /* Gör att listan hamnar precis under inputfältet med 5px marginal */
+  top: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%);
 
-  width: 50%; /* Ser till att listan blir lika bred som inputfältet */
+  width: 50%;
   max-height: 350px;
   background-color: white;
-  border: 1px solid #ccc; /* Ger en lätt ram för bättre synlighet */
-  border-radius: 0 0 10px 10px; /* Rundade hörn nedåt */
-  list-style-type: none; /* Tar bort standardpunkterna från listan */
+  border: 1px solid #ccc;
+  border-radius: 0 0 10px 10px;
+  list-style-type: none;
 
-  overflow-y: auto; /* Gör att listan scrollar om den blir för lång */
+  overflow-y: auto;
   scrollbar-width: none;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Lägger till en skugga för bättre synlighet */
-  z-index: 1000; /* Håller listan ovanför andra element */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 100;
 }
 
-/* Styla varje list-item snyggt */
+/* --------Stylar varje list-item ----- */
 .search__list-item {
   display: flex;
   flex-direction: row;
   padding: 10px;
-  cursor: pointer;
   font-family: var(--main-font-family);
   font-size: 1rem;
-  color: black;
-  transition: background-color 0.3s ease-in-out;
+  color: var(--header-grey);
+
   overflow: hidden;
 }
 .search__list-item:nth-child(odd) {
   background-color: #f0e5c0;
 }
 
-/* Highlighta när man hovrar över ett list-item */
-.search__list-item:hover {
+.search__list-item:hover .search__list-img {
+  transform: scale(1.5);
+}
+
+.search__list-item--cursor {
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.search__list-item--cursor:hover {
   background-color: #f5c518;
   color: white;
 }
-.search__list-item:hover .search__list-img {
-  transform: scale(1.5); /* Förstorar bilden med 20% */
-}
-
 .search__list-img {
   height: 7rem;
   width: 5rem;
   object-fit: cover;
-  transition: transform 0.3s ease; /
+  transition: transform 0.3s ease;
 }
 
-
 .search__list-text {
-margin-left: 2rem;
-transition: transform 0.3s ease;
+  margin-left: 2rem;
+  transition: transform 0.3s ease;
 }
 .search__list-text--big {
   font-weight: 600;
   text-align: center;
 }
-
-.search__list-show-all{
- display: flex;
- justify-content: center;
-}
 .search__list-item:hover .search__list-text {
-  transform: translateX(1rem); /* Flyttar texten 10px åt höger */ }
+  transform: translateX(1rem);
+}
+
+.search__list-show-all {
+  display: flex;
+  justify-content: center;
+}
 
 @media screen and (max-width: 810px) {
   .movieCard__title--big {
@@ -354,5 +357,83 @@ transition: transform 0.3s ease;
   }
   .movieCard__text--long {
     margin-left: 0;
+  }
+
+  .search__list-item {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .search__list-text {
+    margin: 0;
+    text-align: center;
+  }
+
+  .search__list-item--cursor:hover {
+    background-color: #f5c518;
+    color: white;
+  }
+  .search__list-img {
+    height: 7rem;
+    width: 5rem;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .search__list-item--cursor:hover {
+    background-color: #f5c518;
+    color: white;
+  }
+
+  .search__list-text {
+    margin-left: 0;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease, visability 0s linear 0.3s;
+  }
+
+  .search__list-item:hover .search__list-text {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visability 0s linear 0s;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .search__autocomplete-list {
+    width: fit-content;
+    margin-right: 10rem;
+  }
+
+  .search__list-item {
+    flex-direction: column;
+  }
+
+  .search__list-text {
+    margin: 0;
+    text-align: center;
+  }
+  .search__list-img {
+    display: none;
+  }
+  .search__list-item:hover .search__list-img {
+    display: none;
+  }
+
+  .search__list-text {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease, visability 0s linear 0.3s;
+    font-size: 0.8rem;
+  }
+
+  .search__list-item:hover .search__list-text {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  .search__list-text--big {
+    font-size: 0.8rem;
   }
 }
