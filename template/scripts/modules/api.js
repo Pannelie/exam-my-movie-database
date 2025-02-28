@@ -12,6 +12,19 @@ export async function fetchMovies() {
   }
 }
 
+//sökfunktion fetch, justerade imdbID till parameter vid anrop
+export async function fetchFullOmdb(imdbID) {
+  try {
+    const response = await fetch(
+      `http://www.omdbapi.com/?apikey=${apiKey}&plot=full&i=${imdbID}`
+    );
+    return await response.json();
+  } catch (error) {
+    console.error(`Fel vid hämtning av filmer:`, error);
+    return [];
+  }
+}
+
 //sökfunktion fetch, justerade söksträng till parameter vid anrop
 export async function fetchSearchOmdb(searchString) {
   if (!searchString) return []; // Undvik onödiga API-anrop
@@ -26,21 +39,9 @@ export async function fetchSearchOmdb(searchString) {
     }
 
     const data = await response.json();
+    console.log(`this is the data that has search: `, data);
 
     return data.Search || []; // Om `Search` saknas, returnera en tom array
-  } catch (error) {
-    console.error(`Fel vid hämtning av filmer:`, error);
-    return [];
-  }
-}
-
-//sökfunktion fetch, justerade imdbID till parameter vid anrop
-export async function fetchFullOmdb(imdbID) {
-  try {
-    const response = await fetch(
-      `http://www.omdbapi.com/?apikey=${apiKey}&plot=full&i=${imdbID}`
-    );
-    return await response.json();
   } catch (error) {
     console.error(`Fel vid hämtning av filmer:`, error);
     return [];
